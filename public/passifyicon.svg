@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92 48">
+  <rect x="0" y="2" width="92" height="54" rx="9" fill="#6c47ff"/>
+  <circle cx="0" cy="24" r="9" fill="#080810"/>
+  <circle cx="92" cy="24" r="9" fill="#080810"/>
+  <path d="M22 4v40" stroke="#080810" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text
+    x="52"
+    y="32"
+    text-anchor="middle"
+    fill="#fff"
+    font-family="Arial, sans-serif"
+    font-size="22"
+    font-weight="900"
+  >P</text>
+</svg>
