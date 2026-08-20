@@ -54,14 +54,14 @@ const team = [
     bio: 'A third year computer science student in KNUST and a Full Stack Developer thats crafts scalable, user-focused web solutions with React, Node.js, and modern cloud tools. Very passionate about clean code, intuitive design, and continuous learning.',
     links: { linkedin: 'https://www.linkedin.com/in/arnold-agbenyo-8074142b2?utm_source=share_via&utm_content=profile&utm_medium=member_ios', instagram: 'https://www.instagram.com/_blackace9?igsh=ZXJvbXI1MnlvdjBo&utm_source=qr', whatsapp: 'https://wa.me/233537015329?text=Hi%20Ama%2C%20I%20found%20you%20through%20Passify.' },
   },
-  //   {
-  //     name: 'Lawrencia Adu Nyarkoa',
-  //     role: 'Backend & API',
-  //     initial: 'LAN',
-  //     image: '',
-  //     bio: 'Building the systems that keep tickets, events, and check-ins moving reliably.',
-  //     links: { linkedin: '#', instagram: '#', whatsapp: '#' },
-  //   },
+    {
+      name: 'Lawrencia Adu Nyarkoa',
+      role: 'Backend & API',
+      initial: 'LAN',
+      image: '',
+      bio: 'Building the systems that keep tickets, events, and check-ins moving reliably.',
+      links: { linkedin: 'https://www.linkedin.com/in/adunyarkoa02?utm_source=share_via&utm_content=profile&utm_medium=member_ios', instagram: 'https://www.instagram.com/nyarkoaa.02?igsh=MWt5Y2s0czhobTl3eA==', whatsapp: 'https://wa.me/233537401522?text=Hi%20Ama%2C%20I%20found%20you%20through%20Passify.' },
+    },
 ];
 
 export default function AboutPage() {
