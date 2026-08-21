@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { CheckCircle, XCircle, Camera, Ticket } from 'lucide-react';
-import { BrowserQRCodeReader } from '@zxing/library';
+import { BrowserQRCodeReader } from '@zxing/browser';
 import api from '../services/api';
 import toast from 'react-hot-toast';
  
@@ -25,83 +25,79 @@ export default function ValidatePage() {
     return () => stopCamera();
   }, []);
  
-  const startCamera = async () => {
+const startCamera = async () => {
   try {
-    if (!navigator.mediaDevices?.getUserMedia) {
-      toast.error('Camera is not supported by this browser');
-      return;
-    }
+    // Stop any previous scanner
+    stopCamera();
 
-    // Request camera explicitly
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: { ideal: 'environment' },
-        width: { ideal: 1280 },
-        height: { ideal: 720 },
-      },
-      audio: false,
-    });
-
-    // Attach stream to video
-    if (videoRef.current) {
-      videoRef.current.srcObject = stream;
-      videoRef.current.setAttribute('playsinline', 'true');
-      videoRef.current.muted = true;
-
-      await videoRef.current.play();
-    }
+    const reader = new BrowserQRCodeReader();
+    codeReaderRef.current = reader;
 
     setCameraActive(true);
 
-    // Start ZXing
-    codeReaderRef.current = new BrowserQRCodeReader();
+    console.log('Starting QR scanner...');
 
-    codeReaderRef.current.decodeFromVideoElement(
+    await reader.decodeFromConstraints(
+      {
+        video: {
+          facingMode: { ideal: 'environment' },
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
+        audio: false,
+      },
       videoRef.current,
-      async (result, err) => {
+      async (result, error) => {
         if (result) {
-          const token = result.getText();
+          console.log('ZXing callback:', result, error);
+          const qrToken = result.getText();
 
+          console.log('==============================');
+          console.log('QR CODE DETECTED!');
+          console.log('QR TOKEN:', qrToken);
+          console.log('==============================');
           stopCamera();
 
-          await handleScan(token);
+          await handleScan(qrToken);
         }
+
+        // ZXing continuously calls this while it is looking.
+        // Do NOT display an error here because "NotFoundException"
+        // is normal when there is no QR in the current frame.
       }
     );
 
   } catch (err) {
-    console.error('Camera error:', err);
-
-    if (err.name === 'NotAllowedError') {
-      toast.error(
-        'Camera permission was denied. Please allow camera access in your browser settings.'
-      );
-    } else if (err.name === 'NotFoundError') {
-      toast.error('No camera was found on this device.');
-    } else if (err.name === 'NotReadableError') {
-      toast.error('Camera is being used by another application.');
-    } else if (err.name === 'SecurityError') {
-      toast.error('Camera requires a secure HTTPS connection.');
-    } else {
-      toast.error(`Could not access camera: ${err.message}`);
-    }
+    console.error('QR scanner error:', err);
 
     setCameraActive(false);
+
+    toast.error(
+      err?.message || 'Unable to start QR scanner'
+    );
   }
 };
 
+
 const stopCamera = () => {
-  // Stop ZXing
+  console.log('Stopping QR scanner...');
+
   if (codeReaderRef.current) {
-    codeReaderRef.current.reset();
+    try {
+      codeReaderRef.current.reset();
+    } catch (err) {
+      console.warn('ZXing reset error:', err);
+    }
+
     codeReaderRef.current = null;
   }
 
-  // IMPORTANT: stop the actual camera tracks
   if (videoRef.current?.srcObject) {
     const tracks = videoRef.current.srcObject.getTracks();
 
-    tracks.forEach((track) => track.stop());
+    tracks.forEach((track) => {
+      track.stop();
+    });
 
     videoRef.current.srcObject = null;
   }
