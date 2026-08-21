@@ -103,7 +103,7 @@ export default function TermsPage() {
           </div>
           <h1 className="mt-7 text-5xl font-semibold tracking-[-0.05em] text-white sm:text-6xl">Terms of Service</h1>
           <p className="mt-5 text-lg leading-8 text-zinc-400">These terms explain the rules for using Passify, whether you are discovering an event, buying a ticket, or hosting one.</p>
-          <p className="mt-5 text-sm text-zinc-500">Effective date: August 14, 2026</p>
+          <p className="mt-5 text-sm text-white">Effective date: August 14, 2026</p>
         </header>
 
         <div className="mt-14 overflow-hidden rounded-[2rem] border border-white/10 bg-[#11111f]/85 shadow-2xl shadow-black/20 backdrop-blur-xl">
@@ -116,7 +116,7 @@ export default function TermsPage() {
               <div key={title} className="rounded-2xl border border-white/[0.07] bg-[#0d0d18]/60 p-4">
                 <Icon size={19} className="text-violet-300" />
                 <p className="mt-3 font-semibold text-white">{title}</p>
-                <p className="mt-1 text-sm leading-5 text-zinc-500">{text}</p>
+                <p className="mt-1 text-sm leading-5 text-white">{text}</p>
               </div>
             ))}
           </div>

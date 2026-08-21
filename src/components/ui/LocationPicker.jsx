@@ -101,8 +101,8 @@ export default function LocationPicker({ onLocationSelect, initialVenue = '' }) 
       {/* Search input */}
       <div className="relative">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <div className="flex min-w-0 flex-1 items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition-colors focus-within:border-[#6c47ff]/50">
-            <Search size={15} className="shrink-0 text-zinc-500" />
+          <div className="flex min-w-0 flex-1 items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-3 transition-colors focus-within:border-[#6c47ff]/50">
+            <Search size={15} className="shrink-0 text-white" />
 
             <input
               type="text"
@@ -110,7 +110,7 @@ export default function LocationPicker({ onLocationSelect, initialVenue = '' }) 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              className="min-w-0 flex-1 bg-transparent text-base text-white placeholder-zinc-500 outline-none"
+              className="min-w-0 flex-1 bg-transparent text-base text-white placeholder-white outline-none"
             />
 
             {search && (
@@ -119,7 +119,7 @@ export default function LocationPicker({ onLocationSelect, initialVenue = '' }) 
                   setSearch('');
                   setResults([]);
                 }}
-                className="shrink-0 text-zinc-500 hover:text-white"
+                className="shrink-0 text-white hover:text-white"
                 aria-label="Clear search"
               >
                 <X size={14} />
@@ -138,7 +138,7 @@ export default function LocationPicker({ onLocationSelect, initialVenue = '' }) 
 
         {/* Search results dropdown */}
         {results.length > 0 && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-[#111122] border border-white/10 rounded-xl overflow-hidden z-50 shadow-xl">
+          <div className="absolute top-full left-0 right-0 mt-1 bg-[#111122] border border-white/10 rounded-full overflow-hidden z-50 shadow-xl">
             {results.map((feature) => (
               <button
                 key={feature.id}
@@ -148,7 +148,7 @@ export default function LocationPicker({ onLocationSelect, initialVenue = '' }) 
                 <MapPin size={14} className="text-[#6c47ff] flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-white text-base">{feature.text}</p>
-                  <p className="text-zinc-500 text-base">{feature.place_name}</p>
+                  <p className="text-white text-base">{feature.place_name}</p>
                 </div>
               </button>
             ))}
@@ -170,7 +170,7 @@ export default function LocationPicker({ onLocationSelect, initialVenue = '' }) 
 
       {/* Selected location */}
       {selected && (
-        <div className="flex items-center gap-3 bg-[#6c47ff]/10 border border-[#6c47ff]/20 rounded-xl px-4 py-3">
+        <div className="flex items-center gap-3 bg-[#6c47ff]/10 border border-[#6c47ff]/20 rounded-full px-4 py-3">
           <MapPin size={14} className="text-[#6c47ff] flex-shrink-0" />
           <p className="text-white text-base flex-1 truncate">{selected.venue}</p>
           <span className="text-[#a78bfa] text-base">✓ Set</span>

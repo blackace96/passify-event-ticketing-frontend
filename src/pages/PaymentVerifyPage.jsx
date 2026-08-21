@@ -35,7 +35,7 @@ export default function PaymentVerifyPage() {
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-10">
             <div className="w-16 h-16 border-4 border-[#6c47ff] border-t-transparent rounded-full animate-spin mx-auto mb-6" />
             <h2 className="text-white text-xl font-bold mb-2">Verifying payment...</h2>
-            <p className="text-zinc-500 text-sm">Please wait while we confirm your payment</p>
+            <p className="text-white text-sm">Please wait while we confirm your payment</p>
           </div>
         )}
 
@@ -50,14 +50,14 @@ export default function PaymentVerifyPage() {
               {ticket && (
                 <button
                   onClick={() => navigate(`/ticket/${ticket.qrToken}`)}
-                  className="w-full bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-3 rounded-xl transition-all"
+                  className="w-full bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-3 rounded-full transition-all"
                 >
                   View my ticket
                 </button>
               )}
               <button
                 onClick={() => navigate('/events')}
-                className="w-full bg-white/5 border border-white/10 hover:border-white/20 text-white font-medium py-3 rounded-xl transition-all"
+                className="w-full bg-white/5 border border-white/10 hover:border-white/20 text-white font-medium py-3 rounded-full transition-all"
               >
                 Browse more events
               </button>
@@ -74,7 +74,7 @@ export default function PaymentVerifyPage() {
             </div>
             <button
               onClick={() => navigate(-1)}
-              className="w-full bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-3 rounded-xl transition-all"
+              className="w-full bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-3 rounded-full transition-all"
             >
               Try again
             </button>

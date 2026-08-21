@@ -57,25 +57,25 @@ export default function EventsPage() {
 
         {/* Search + Filter bar */}
         <div className="flex flex-col md:flex-row gap-3 mb-10">
-          <div className="flex-1 flex items-center gap-3 bg-[#111122] border border-white/10 rounded-xl px-4 py-3">
-            <Search size={16} className="text-zinc-500" />
+          <div className="flex-1 flex items-center gap-3 bg-[#111122] border border-white/10 rounded-full px-4 py-3">
+            <Search size={16} className="text-white" />
             <input
               type="text"
               placeholder="Search events, venues..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-transparent text-white text-base placeholder-zinc-500 outline-none flex-1"
+              className="bg-transparent text-white text-base placeholder-white outline-none flex-1"
             />
           </div>
-          <div className="flex items-center gap-3 bg-[#111122] border border-white/10 rounded-xl px-4 py-3 md:w-44">
-            <Calendar size={16} className="text-zinc-500" />
-            <span className="text-zinc-500 text-base">Any date</span>
+          <div className="flex items-center gap-3 bg-[#111122] border border-white/10 rounded-full px-4 py-3 md:w-44">
+            <Calendar size={16} className="text-white" />
+            <span className="text-white text-base">Any date</span>
           </div>
-          <div className="flex items-center gap-3 bg-[#111122] border border-white/10 rounded-xl px-4 py-3 md:w-44">
-            <MapPin size={16} className="text-zinc-500" />
-            <span className="text-zinc-500 text-base">Any location</span>
+          <div className="flex items-center gap-3 bg-[#111122] border border-white/10 rounded-full px-4 py-3 md:w-44">
+            <MapPin size={16} className="text-white" />
+            <span className="text-white text-base">Any location</span>
           </div>
-          <button className="flex items-center gap-2 bg-white/5 border border-white/10 hover:bg-white/10 text-zinc-400 text-base px-4 py-3 rounded-xl transition-all">
+          <button className="flex items-center gap-2 bg-white/5 border border-white/10 hover:bg-white/10 text-zinc-400 text-base px-4 py-3 rounded-full transition-all">
             <SlidersHorizontal size={16} />
             Filters
           </button>
@@ -113,7 +113,7 @@ export default function EventsPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
             <Ticket size={48} className="text-zinc-700 mx-auto mb-4" />
-            <p className="text-zinc-500 text-lg">No events found</p>
+            <p className="text-white text-lg">No events found</p>
             <p className="text-zinc-600 text-base mt-1">Try a different search or check back later</p>
           </div>
         ) : (
@@ -142,17 +142,17 @@ export default function EventsPage() {
                   {/* Content */}
                   <div className="p-5 flex items-start gap-4">
                     <div className="text-center min-w-[40px]">
-                      <p className="text-zinc-500 text-base uppercase">
+                      <p className="text-white text-base uppercase">
                         {date.toLocaleString('default', { month: 'short' })}
                       </p>
                       <p className="text-white text-2xl font-bold leading-none">{date.getDate()}</p>
-                      <p className="text-zinc-500 text-base">
+                      <p className="text-white text-base">
                         {date.toLocaleString('default', { weekday: 'short' })}
                       </p>
                     </div>
                     <div className="flex-1">
                       <h3 className="text-white font-semibold text-base mb-1">{event.title}</h3>
-                      <p className="text-zinc-500 text-base mb-1">{event.venue}</p>
+                      <p className="text-white text-base mb-1">{event.venue}</p>
                       <p className="text-zinc-600 text-sm mb-4">{formatEventTime(date)}</p>
                       <button className="flex items-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-4 py-2 rounded-lg transition-all duration-200">
                         <Ticket size={12} />

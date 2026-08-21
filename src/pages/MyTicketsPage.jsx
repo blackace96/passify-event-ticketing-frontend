@@ -89,7 +89,7 @@ export default function MyTicketsPage() {
             </p>
             <button
               onClick={() => navigate('/events')}
-              className="bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-6 py-3 rounded-xl transition-all"
+              className="bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-6 py-3 rounded-full transition-all"
             >
               Browse events
             </button>
@@ -108,16 +108,16 @@ export default function MyTicketsPage() {
                   <div className="flex items-center gap-5">
 
                     {/* Date block */}
-                    <div className={`rounded-xl p-3 text-center min-w-[56px] ${
+                    <div className={`rounded-full p-3 text-center min-w-[56px] ${
                       isUpcoming
                         ? 'bg-[#6c47ff]/20 border border-[#6c47ff]/30'
                         : 'bg-white/5 border border-white/10'
                     }`}>
-                      <p className={`text-base uppercase ${isUpcoming ? 'text-[#a78bfa]' : 'text-zinc-500'}`}>
+                      <p className={`text-base uppercase ${isUpcoming ? 'text-[#a78bfa]' : 'text-white'}`}>
                         {date.toLocaleString('default', { month: 'short' })}
                       </p>
                       <p className="text-white text-2xl font-bold leading-none">{date.getDate()}</p>
-                      <p className={`text-base ${isUpcoming ? 'text-[#a78bfa]' : 'text-zinc-500'}`}>
+                      <p className={`text-base ${isUpcoming ? 'text-[#a78bfa]' : 'text-white'}`}>
                         {date.toLocaleString('default', { weekday: 'short' })}
                       </p>
                     </div>
@@ -130,7 +130,7 @@ export default function MyTicketsPage() {
                           <CheckCircle size={14} className="text-green-500 flex-shrink-0" />
                         )}
                       </div>
-                      <div className="flex items-center gap-4 text-zinc-500 text-base">
+                      <div className="flex items-center gap-4 text-white text-base">
                         <span className="flex items-center gap-1">
                           <MapPin size={12} /> {ticket.event.venue}
                         </span>
@@ -142,10 +142,10 @@ export default function MyTicketsPage() {
                       <div className="mt-2">
                         <span className={`inline-block text-base px-3 py-1 rounded-full ${
                           ticket.status === 'USED'
-                            ? 'bg-zinc-800 text-zinc-500'
+                            ? 'bg-zinc-800 text-white'
                             : isUpcoming
                             ? 'bg-[#6c47ff]/20 text-[#a78bfa] border border-[#6c47ff]/30'
-                            : 'bg-zinc-800 text-zinc-500'
+                            : 'bg-zinc-800 text-white'
                         }`}>
                           {ticket.status === 'USED' ? '✓ Used' : isUpcoming ? '● Valid' : 'Past'}
                         </span>

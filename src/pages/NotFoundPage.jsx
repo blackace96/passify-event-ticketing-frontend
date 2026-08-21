@@ -30,7 +30,7 @@ export default function NotFoundPage() {
 
         {/* Text */}
         <h1 className="text-3xl font-bold text-white mb-3">Page not found</h1>
-        <p className="text-zinc-500 text-base leading-relaxed mb-10">
+        <p className="text-white text-base leading-relaxed mb-10">
           Looks like this ticket has expired. The page you're looking for doesn't exist or has been moved.
         </p>
 
@@ -38,13 +38,13 @@ export default function NotFoundPage() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-white/20 text-white text-base font-medium px-6 py-3 rounded-xl transition-all w-full sm:w-auto justify-center"
+            className="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-white/20 text-white text-base font-medium px-6 py-3 rounded-full transition-all w-full sm:w-auto justify-center"
           >
             <ArrowLeft size={16} /> Go back
           </button>
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-6 py-3 rounded-xl transition-all w-full sm:w-auto justify-center"
+            className="flex items-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-6 py-3 rounded-full transition-all w-full sm:w-auto justify-center"
           >
             <Home size={16} /> Back to home
           </button>

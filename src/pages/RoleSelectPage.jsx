@@ -80,7 +80,7 @@ export default function RoleSelectPage() {
           <h1 className="text-white text-3xl font-bold mb-2">
             Welcome, {user?.name?.split(' ')[0]} 👋
           </h1>
-          <p className="text-zinc-500">How will you be using PASSIFY?</p>
+          <p className="text-white">How will you be using PASSIFY?</p>
         </div>
 
         {/* Role cards */}
@@ -103,13 +103,13 @@ export default function RoleSelectPage() {
                     <CheckCircle size={20} className="text-[#6c47ff]" />
                   </div>
                 )}
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 ${
                   isSelected ? 'bg-[#6c47ff]' : 'bg-white/5'
                 }`}>
                   <Icon size={22} className={isSelected ? 'text-white' : 'text-zinc-400'} />
                 </div>
                 <h3 className="text-white text-lg font-semibold mb-1">{role.label}</h3>
-                <p className="text-zinc-500 text-base mb-5">{role.desc}</p>
+                <p className="text-white text-base mb-5">{role.desc}</p>
                 <ul className="space-y-2">
                   {role.perks.map((perk) => (
                     <li key={perk} className="flex items-center gap-2 text-zinc-400 text-base">
@@ -134,7 +134,7 @@ export default function RoleSelectPage() {
               placeholder="e.g. Afro Nation Events, KNUST SRC..."
               value={orgName}
               onChange={(e) => setOrgName(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-base placeholder-zinc-500 outline-none focus:border-[#6c47ff]/50 transition-colors"
+              className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-white text-base placeholder-white outline-none focus:border-[#6c47ff]/50 transition-colors"
             />
             <p className="text-zinc-600 text-base mt-2">This will be shown on your events as the organiser name</p>
           </div>
@@ -144,7 +144,7 @@ export default function RoleSelectPage() {
         <button
           onClick={handleConfirm}
           disabled={!selected || loading}
-          className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium py-4 rounded-xl transition-all duration-200 text-base"
+          className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium py-4 rounded-full transition-all duration-200 text-base"
         >
           {loading ? (
             <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

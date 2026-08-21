@@ -16,7 +16,7 @@ const ROLES = {
 function DetailRow({ icon: Icon, label, value, last }) {
   return (
     <div className={`flex items-center gap-4 py-4 ${last ? '' : 'border-b border-white/[0.06]'}`}>
-      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-violet-400/10 text-violet-300 ring-1 ring-inset ring-violet-300/10">
+      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-violet-400/10 text-violet-300 ring-1 ring-inset ring-violet-300/10">
         <Icon size={17} strokeWidth={2} />
       </div>
       <div className="min-w-0 flex-1">
@@ -36,6 +36,7 @@ export default function ProfilePage() {
   const currentRole = ROLES[user?.role] || ROLES.ATTENDEE;
   const CurrentRoleIcon = currentRole.icon;
   const initial = user?.name?.trim()?.[0]?.toUpperCase() || 'U';
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   const accountDetails = [
     { key: 'name', label: 'Full name', icon: CircleUserRound, value: user?.name },
@@ -82,13 +83,13 @@ export default function ProfilePage() {
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="group mb-7 inline-flex items-center gap-2 text-sm font-medium text-zinc-500 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090912]"
+            className="group mb-7 inline-flex items-center text-sm font-medium text-white gap-2 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090912]"
           >
             <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
             Back
           </button>
           <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Profile & settings</h1>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-zinc-500 sm:text-base">
+          <p className="mt-2 max-w-xl text-sm leading-6 text-white sm:text-base">
             Manage your account information and workspace preferences.
           </p>
         </div>
@@ -125,6 +126,7 @@ export default function ProfilePage() {
           </div>
         </section>
 
+
         {/* Workspace Switch Card */}
         <section className="relative mt-5 overflow-hidden rounded-3xl border border-violet-400/15 bg-gradient-to-br from-violet-500/15 via-[#171528] to-[#11111f] p-5 shadow-xl shadow-violet-950/10 sm:mt-6 sm:p-7">
           <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-violet-400/15 blur-3xl" />
@@ -141,25 +143,34 @@ export default function ProfilePage() {
             </div>
             <button
               type="button"
-              onClick={() => setShowRoleDialog(true)}
-              className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-[#171528] transition hover:bg-violet-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-violet-900 sm:w-auto"
+              onClick={() => {
+                if (user?.role === 'ATTENDEE') {
+                  navigate('/become-organizer');
+                } else {
+                  setShowRoleDialog(true);
+                }
+              }}
+              className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-sm font-semibold text-[#171528] transition hover:bg-violet-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-violet-900 sm:w-auto"
             >
-              Switch to {currentRole.targetLabel}
+              {user?.role === 'ATTENDEE'
+                ? 'Become an Organiser'
+                : `Switch to ${currentRole.targetLabel}`}
               <ArrowRight size={16} />
             </button>
           </div>
         </section>
 
+
         {/* Sign Out Card */}
         <section className="mt-5 flex flex-col gap-4 rounded-3xl border border-white/[0.07] bg-white/[0.025] p-5 sm:mt-6 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div>
             <h2 className="text-sm font-semibold text-zinc-200 sm:text-base">Sign out</h2>
-            <p className="mt-1 text-sm leading-6 text-zinc-500">End your current session on this device.</p>
+            <p className="mt-1 text-sm leading-6 text-white">End your current session on this device.</p>
           </div>
           <button
             type="button"
-            onClick={handleLogout}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-red-400/20 bg-red-400/[0.07] px-4 py-2.5 text-sm font-semibold text-red-300 transition hover:border-red-400/35 hover:bg-red-400/[0.13] focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:w-auto"
+            onClick={() => setShowLogoutDialog(true)}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-red-400/20 bg-red-400/[0.07] px-4 py-2.5 text-sm font-semibold text-red-300 transition hover:border-red-400/35 hover:bg-red-400/[0.13] focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:w-auto"
           >
             <LogOut size={16} />
             Sign out
@@ -168,55 +179,123 @@ export default function ProfilePage() {
       </main>
 
       {/* Switch Workspace Modal */}
-      {showRoleDialog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="switch-role-title">
-          <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#171725] p-5 shadow-2xl shadow-black/50 sm:p-7">
-            <div className="flex items-start justify-between gap-4">
-              <div className="grid h-11 w-11 place-items-center rounded-2xl bg-violet-400/15 text-violet-200">
-                <CurrentRoleIcon size={20} />
+      {
+        showRoleDialog && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-6 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="switch-role-title">
+            <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#171725] p-5 shadow-2xl shadow-black/50 sm:p-7">
+              <div className="flex items-start justify-between gap-4">
+                <div className="grid h-11 w-11 place-items-center rounded-2xl bg-violet-400/15 text-violet-200">
+                  <CurrentRoleIcon size={20} />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowRoleDialog(false)}
+                  disabled={upgrading}
+                  className="rounded-lg p-1.5 text-white transition hover:bg-white/5 hover:text-white disabled:opacity-50"
+                  aria-label="Close dialog"
+                >
+                  <X size={19} />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowRoleDialog(false)}
-                disabled={upgrading}
-                className="rounded-lg p-1.5 text-zinc-500 transition hover:bg-white/5 hover:text-white disabled:opacity-50"
-                aria-label="Close dialog"
-              >
-                <X size={19} />
-              </button>
-            </div>
 
-            <h2 id="switch-role-title" className="mt-5 text-xl font-semibold text-white">
-              Switch to {currentRole.targetLabel}?
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-zinc-400 sm:text-base">
-              Your account will switch to the {currentRole.targetLabel.toLowerCase()} workspace and you&apos;ll be redirected to the appropriate dashboard.
-            </p>
+              <h2 id="switch-role-title" className="mt-5 text-xl font-semibold text-white">
+                Switch to {currentRole.targetLabel}?
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-zinc-400 sm:text-base">
+                Your account will switch to the {currentRole.targetLabel.toLowerCase()} workspace and you&apos;ll be redirected to the appropriate dashboard.
+              </p>
 
-            <div className="mt-7 flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
-              <button
-                type="button"
-                onClick={() => setShowRoleDialog(false)}
-                disabled={upgrading}
-                className="rounded-xl px-4 py-2.5 text-sm font-semibold text-zinc-300 transition hover:bg-white/5 hover:text-white disabled:opacity-50"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleRoleSwitch}
-                disabled={upgrading}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {upgrading ? <LoaderCircle size={17} className="animate-spin" /> : <ChevronRight size={17} />}
-                {upgrading ? 'Switching…' : `Switch to ${currentRole.targetLabel}`}
-              </button>
+              <div className="mt-7 flex flex-col-reverse gap-2.5 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  onClick={() => setShowRoleDialog(false)}
+                  disabled={upgrading}
+                  className="rounded-full px-4 py-2.5 text-sm font-semibold text-zinc-300 transition hover:bg-white/5 hover:text-white disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleRoleSwitch}
+                  disabled={upgrading}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-violet-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {upgrading ? <LoaderCircle size={17} className="animate-spin" /> : <ChevronRight size={17} />}
+                  {upgrading ? 'Switching…' : `Switch to ${currentRole.targetLabel}`}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )
+      }
+      {/* Sign Out Confirmation Modal */}
+      {
+        showLogoutDialog && (
+          <div
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 px-4 py-6 backdrop-blur-md"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="logout-title"
+          >
+            <div className="relative w-full max-w-md overflow-hidden rounded-[2rem] border border-white/10 bg-[#11111f] shadow-2xl shadow-black/60">
 
+              {/* Ambient glow */}
+              <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-violet-600/20 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-red-500/10 blur-3xl" />
+
+              <div className="relative p-6 sm:p-8">
+
+                {/* Icon */}
+                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl border border-red-400/20 bg-red-400/10">
+                  <LogOut
+                    size={28}
+                    strokeWidth={1.8}
+                    className="text-red-300"
+                  />
+                </div>
+
+                {/* Heading */}
+                <h2
+                  id="logout-title"
+                  className="text-2xl font-bold tracking-tight text-white sm:text-3xl"
+                >
+                  Are you sure?
+                </h2>
+
+                <p className="mt-3 text-base leading-7 text-zinc-400">
+                  Are you sure you want to sign out of your Passify account?
+                </p>
+
+                <p className="mt-2 text-sm font-medium text-zinc-500">
+                  You can always sign back in whenever you're ready.
+                </p>
+
+                {/* Buttons */}
+                <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+
+                  <button
+                    type="button"
+                    onClick={() => setShowLogoutDialog(false)}
+                    className="w-full rounded-full border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-semibold text-zinc-300 transition hover:bg-white/[0.08] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 sm:w-auto"
+                  >
+                    Stay signed in
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className="w-full rounded-full bg-red-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-red-950/30 transition hover:bg-red-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400 sm:w-auto"
+                  >
+                    Yes, sign out
+                  </button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      }
       <Footer />
-    </div>
+    </div >
   );
 }

@@ -165,10 +165,10 @@ const directionsUrl = hasCoordinates
             </div>
 
             <div className="mt-6 grid grid-cols-2 gap-3">
-              <a href={directionsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 text-sm font-semibold text-zinc-100 transition hover:border-violet-300/35 hover:bg-violet-400/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
+              <a href={directionsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-3 text-sm font-semibold text-zinc-100 transition hover:border-violet-300/35 hover:bg-violet-400/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
                 <Navigation size={16} className="text-violet-300" /> Directions
               </a>
-              <a href={calendarUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-3 text-sm font-semibold text-zinc-100 transition hover:border-violet-300/35 hover:bg-violet-400/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
+              <a href={calendarUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-3 text-sm font-semibold text-zinc-100 transition hover:border-violet-300/35 hover:bg-violet-400/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
                 <CalendarPlus size={16} className="text-violet-300" /> Add to calendar
               </a>
             </div>
@@ -185,22 +185,22 @@ const directionsUrl = hasCoordinates
               ) : (
                 <div className="flex h-56 w-56 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.05]"><div className="h-6 w-6 animate-spin rounded-full border-2 border-violet-500 border-t-transparent" /></div>
               )}
-              <div className="text-center"><p className="font-medium text-zinc-200">Ready at the entrance</p><p className="mt-1 text-sm text-zinc-500">Show this QR code to the event staff.</p></div>
+              <div className="text-center"><p className="font-medium text-zinc-200">Ready at the entrance</p><p className="mt-1 text-sm text-white">Show this QR code to the event staff.</p></div>
             </div>
 
             <div className="mt-7 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500">Ticket holder</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-white">Ticket holder</p>
               <p className="mt-2 font-medium text-white">{ticket.guestName || ticket.user?.name || 'Guest attendee'}</p>
-              <p className="mt-1 text-sm text-zinc-500">{ticket.guestEmail || ticket.user?.email || 'Email not available'}</p>
+              <p className="mt-1 text-sm text-white">{ticket.guestEmail || ticket.user?.email || 'Email not available'}</p>
             </div>
           </div>
         </section>
 
         <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <button type="button" onClick={handleDownload} disabled={!qrDataUrl} className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#111122] px-4 py-3.5 font-semibold text-white transition hover:border-violet-300/40 hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:opacity-50">
+          <button type="button" onClick={handleDownload} disabled={!qrDataUrl} className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-[#111122] px-4 py-3.5 font-semibold text-white transition hover:border-violet-300/40 hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:opacity-50">
             <Download size={17} /> Download QR
           </button>
-          <button type="button" onClick={handleShare} className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-500 px-4 py-3.5 font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
+          <button type="button" onClick={handleShare} className="inline-flex items-center justify-center gap-2 rounded-full bg-violet-500 px-4 py-3.5 font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
             <Share2 size={17} /> Share ticket
           </button>
         </div>

@@ -83,13 +83,13 @@ export default function SupportPage() {
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-zinc-400">Search for a quick answer, browse common topics, or send the team a message when you need a hand.</p>
 
           <div className="relative mx-auto mt-10 max-w-2xl">
-            <Search className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-zinc-500" size={20} />
+            <Search className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-white" size={20} />
             <input
               type="search"
               value={query}
               onChange={(event) => { setQuery(event.target.value); setOpenQuestion(null); }}
               placeholder="Search tickets, payments, QR codes..."
-              className="w-full rounded-2xl border border-white/10 bg-[#12121f]/90 py-4 pl-14 pr-5 text-base text-white outline-none placeholder:text-zinc-500 shadow-xl shadow-black/20 transition focus:border-violet-300/50 focus:ring-4 focus:ring-violet-400/10"
+              className="w-full rounded-2xl border border-white/10 bg-[#12121f]/90 py-4 pl-14 pr-5 text-base text-white outline-none placeholder:text-white shadow-xl shadow-black/20 transition focus:border-violet-300/50 focus:ring-4 focus:ring-violet-400/10"
               aria-label="Search support articles"
             />
           </div>
@@ -107,7 +107,7 @@ export default function SupportPage() {
                     onClick={() => { setCategory(id); setOpenQuestion(null); }}
                     className={`flex items-center gap-3 rounded-2xl px-3 py-3 text-left text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 ${category === id ? 'bg-violet-400/15 text-violet-100' : 'text-zinc-400 hover:bg-white/[0.05] hover:text-white'}`}
                   >
-                    <Icon size={18} className={category === id ? 'text-violet-300' : 'text-zinc-500'} />
+                    <Icon size={18} className={category === id ? 'text-violet-300' : 'text-white'} />
                     {label}
                   </button>
                 ))}
@@ -126,7 +126,7 @@ export default function SupportPage() {
               <div className="mb-5 flex items-center justify-between gap-4">
                 <div>
                   <h2 className="text-xl font-semibold text-white">Helpful answers</h2>
-                  <p className="mt-1 text-sm text-zinc-500">{results.length} {results.length === 1 ? 'article' : 'articles'} found</p>
+                  <p className="mt-1 text-sm text-white">{results.length} {results.length === 1 ? 'article' : 'articles'} found</p>
                 </div>
                 {category !== 'all' && <span className="rounded-full bg-violet-400/10 px-3 py-1 text-xs font-semibold text-violet-200">{categories.find((item) => item.id === category)?.label}</span>}
               </div>
@@ -165,7 +165,7 @@ export default function SupportPage() {
       {showForm && (
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 px-5 py-8 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="support-form-title" onMouseDown={() => setShowForm(false)}>
           <div onMouseDown={(event) => event.stopPropagation()} className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-[#171725] p-6 shadow-2xl shadow-black/50 sm:p-8">
-            <button type="button" onClick={() => setShowForm(false)} className="absolute right-4 top-4 rounded-xl p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300" aria-label="Close support form">
+            <button type="button" onClick={() => setShowForm(false)} className="absolute right-4 top-4 rounded-full p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300" aria-label="Close support form">
               <X size={19} />
             </button>
             {requestSent ? (
@@ -176,7 +176,7 @@ export default function SupportPage() {
                 <p className="mt-7 text-sm font-semibold uppercase tracking-[0.16em] text-emerald-300">Request received</p>
                 <h2 id="support-form-title" className="mt-3 text-3xl font-semibold tracking-tight text-white">We’ve got your message.</h2>
                 <p className="mx-auto mt-4 max-w-sm leading-7 text-zinc-400">Thanks for reaching out. A member of the Passify team will get back to you as soon as possible.</p>
-                <button type="button" onClick={() => setShowForm(false)} className="mt-8 inline-flex items-center gap-2 rounded-xl bg-violet-500 px-5 py-3 font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
+                <button type="button" onClick={() => setShowForm(false)} className="mt-8 inline-flex items-center gap-2 rounded-full bg-violet-500 px-5 py-3 font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300">
                   Done <ArrowRight size={17} />
                 </button>
               </div>
@@ -187,7 +187,7 @@ export default function SupportPage() {
                 <p className="mt-2 leading-6 text-zinc-400">Tell us what happened. Include an event name or payment reference when relevant.</p>
                 <label className="mt-6 block text-sm font-medium text-zinc-200">
                   What can we help with?
-                  <select value={form.subject} onChange={(event) => setForm({ ...form, subject: event.target.value })} className="mt-2 w-full rounded-xl border border-white/10 bg-[#0e0e19] px-4 py-3 text-white outline-none focus:border-violet-300/50 focus:ring-4 focus:ring-violet-400/10">
+                  <select value={form.subject} onChange={(event) => setForm({ ...form, subject: event.target.value })} className="mt-2 w-full rounded-full border border-white/10 bg-[#0e0e19] px-4 py-3 text-white outline-none focus:border-violet-300/50 focus:ring-4 focus:ring-violet-400/10">
                     <option>Ticket issue</option>
                     <option>Payment or refund</option>
                     <option>Event or organiser question</option>
@@ -197,10 +197,10 @@ export default function SupportPage() {
                 </label>
                 <label className="mt-5 block text-sm font-medium text-zinc-200">
                   Message
-                  <textarea value={form.message} onChange={(event) => setForm({ ...form, message: event.target.value })} rows={5} placeholder="Describe the issue and include any useful details..." className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-[#0e0e19] px-4 py-3 text-white outline-none placeholder:text-zinc-600 focus:border-violet-300/50 focus:ring-4 focus:ring-violet-400/10" />
-                  {!form.message.trim() && <span className="mt-2 block text-xs text-zinc-500">Please add a message before sending.</span>}
+                  <textarea value={form.message} onChange={(event) => setForm({ ...form, message: event.target.value })} rows={5} placeholder="Describe the issue and include any useful details..." className="mt-2 w-full resize-none rounded-full border border-white/10 bg-[#0e0e19] px-4 py-3 text-white outline-none placeholder:text-zinc-600 focus:border-violet-300/50 focus:ring-4 focus:ring-violet-400/10" />
+                  {!form.message.trim() && <span className="mt-2 block text-xs text-white">Please add a message before sending.</span>}
                 </label>
-                <button type="submit" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-violet-500 px-5 py-3.5 font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#171725]">
+                <button type="submit" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-violet-500 px-5 py-3.5 font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#171725]">
                   Send request <Send size={17} />
                 </button>
               </form>
