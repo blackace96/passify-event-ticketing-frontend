@@ -26,33 +26,88 @@ export default function ValidatePage() {
   }, []);
  
   const startCamera = async () => {
-    try {
-      codeReaderRef.current = new BrowserQRCodeReader();
-      setCameraActive(true);
-      await codeReaderRef.current.decodeFromConstraints(
-        { video: { facingMode: { ideal: 'environment' } } },
-        videoRef.current,
-        async (result, err) => {
-          if (result) {
-            stopCamera();
-            const token = result.getText();
-            await handleScan(token);
-          }
+  try {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      toast.error('Camera is not supported by this browser');
+      return;
+    }
+
+    // Request camera explicitly
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: 'environment' },
+        width: { ideal: 1280 },
+        height: { ideal: 720 },
+      },
+      audio: false,
+    });
+
+    // Attach stream to video
+    if (videoRef.current) {
+      videoRef.current.srcObject = stream;
+      videoRef.current.setAttribute('playsinline', 'true');
+      videoRef.current.muted = true;
+
+      await videoRef.current.play();
+    }
+
+    setCameraActive(true);
+
+    // Start ZXing
+    codeReaderRef.current = new BrowserQRCodeReader();
+
+    codeReaderRef.current.decodeFromVideoElement(
+      videoRef.current,
+      async (result, err) => {
+        if (result) {
+          const token = result.getText();
+
+          stopCamera();
+
+          await handleScan(token);
         }
+      }
+    );
+
+  } catch (err) {
+    console.error('Camera error:', err);
+
+    if (err.name === 'NotAllowedError') {
+      toast.error(
+        'Camera permission was denied. Please allow camera access in your browser settings.'
       );
-    } catch (err) {
-      console.error('Camera error:', err);
-      toast.error('Could not access camera');
-      setCameraActive(false);
+    } else if (err.name === 'NotFoundError') {
+      toast.error('No camera was found on this device.');
+    } else if (err.name === 'NotReadableError') {
+      toast.error('Camera is being used by another application.');
+    } else if (err.name === 'SecurityError') {
+      toast.error('Camera requires a secure HTTPS connection.');
+    } else {
+      toast.error(`Could not access camera: ${err.message}`);
     }
-  };
- 
-  const stopCamera = () => {
-    if (codeReaderRef.current) {
-      codeReaderRef.current.reset();
-    }
+
     setCameraActive(false);
-  };
+  }
+};
+
+const stopCamera = () => {
+  // Stop ZXing
+  if (codeReaderRef.current) {
+    codeReaderRef.current.reset();
+    codeReaderRef.current = null;
+  }
+
+  // IMPORTANT: stop the actual camera tracks
+  if (videoRef.current?.srcObject) {
+    const tracks = videoRef.current.srcObject.getTracks();
+
+    tracks.forEach((track) => track.stop());
+
+    videoRef.current.srcObject = null;
+  }
+
+  setCameraActive(false);
+};
  
   const handlePinChange = (index, value) => {
     if (!/^\d*$/.test(value)) return;
@@ -120,11 +175,6 @@ export default function ValidatePage() {
  
   return (
     <div className="min-h-screen bg-[#090912] text-white flex flex-col items-center justify-center px-4 py-12">
- 
-      {/* Background glow */}
-      {/* <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#6c47ff] opacity-10 rounded-full blur-[150px]" />
-      </div> */}
  
       {/* Logo */}
       <div className="flex items-center gap-3 mb-10">
