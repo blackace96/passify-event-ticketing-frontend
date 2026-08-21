@@ -120,7 +120,13 @@ export default function ProfilePage() {
           <div className="border-t border-white/[0.06] px-5 sm:px-7">
             <div className="py-2">
               {accountDetails.map((item, index) => (
-                <DetailRow key={item.key} {...item} last={index === accountDetails.length - 1} />
+                <DetailRow
+                  key={item.key}
+                  label={item.label}
+                  icon={item.icon}
+                  value={item.value}
+                  last={index === accountDetails.length - 1}
+                />
               ))}
             </div>
           </div>
