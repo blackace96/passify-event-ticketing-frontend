@@ -51,7 +51,7 @@ export default function OrgDashboardPage() {
           <button
             type="button"
             onClick={() => navigate('/org/events/create')}
-            className="flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-[#6c47ff] px-5 py-3 font-medium text-white transition-all duration-200 hover:bg-[#7c57ff] sm:w-auto"
+            className="flex w-full shrink-0 items-center justify-center gap-2 rounded-full bg-[#6c47ff] px-5 py-3 font-medium text-white transition-all duration-200 hover:bg-[#7c57ff] sm:w-auto"
           >
             <Plus size={18} />
             Create event
@@ -73,7 +73,7 @@ export default function OrgDashboardPage() {
                 className="rounded-2xl border border-white/5 bg-[#111122] p-4 sm:p-5"
               >
                 <div className="mb-2 flex items-center justify-between sm:mb-3">
-                  <p className="text-xs text-zinc-500 sm:text-sm">{stat.label}</p>
+                  <p className="text-xs text-white sm:text-sm">{stat.label}</p>
                   <Icon size={14} className="shrink-0 text-[#6c47ff]" />
                 </div>
                 <p className="text-2xl font-bold text-white sm:text-3xl">{stat.value}</p>
@@ -105,7 +105,7 @@ export default function OrgDashboardPage() {
               <button
                 type="button"
                 onClick={() => navigate('/org/events/create')}
-                className="mx-auto flex items-center gap-2 rounded-xl bg-[#6c47ff] px-6 py-3 text-sm font-medium text-white transition-all hover:bg-[#7c57ff] sm:text-base"
+                className="mx-auto flex items-center gap-2 rounded-full bg-[#6c47ff] px-6 py-3 text-sm font-medium text-white transition-all hover:bg-[#7c57ff] sm:text-base"
               >
                 <Plus size={16} />
                 Create event
@@ -125,7 +125,7 @@ export default function OrgDashboardPage() {
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
                       {/* Date + info */}
                       <div className="flex min-w-0 flex-1 items-start gap-3 sm:items-center sm:gap-4">
-                        <div className="shrink-0 rounded-xl border border-[#6c47ff]/30 bg-[#6c47ff]/20 p-2.5 text-center min-w-[48px] sm:min-w-[52px] sm:p-3">
+                        <div className="shrink-0 rounded-full border border-[#6c47ff]/30 bg-[#6c47ff]/20 p-2.5 text-center min-w-[48px] sm:min-w-[52px] sm:p-3">
                           <p className="text-xs uppercase text-[#a78bfa] sm:text-sm">
                             {date.toLocaleString('default', { month: 'short' })}
                           </p>
@@ -151,10 +151,10 @@ export default function OrgDashboardPage() {
                               {event.status}
                             </span>
                           </div>
-                          <p className="truncate text-sm text-zinc-500 sm:text-base">{event.venue}</p>
+                          <p className="truncate text-sm text-white sm:text-base">{event.venue}</p>
 
                           {/* Mobile stats */}
-                          <div className="mt-2 flex gap-4 text-xs text-zinc-500 sm:text-sm md:hidden">
+                          <div className="mt-2 flex gap-4 text-xs text-white sm:text-sm md:hidden">
                             <span>
                               <span className="font-semibold text-white">{ticketCount}</span> tickets
                             </span>
@@ -170,18 +170,18 @@ export default function OrgDashboardPage() {
                         <div className="hidden items-center gap-6 text-sm md:flex">
                           <div className="text-center">
                             <p className="font-semibold text-white">{ticketCount}</p>
-                            <p className="text-zinc-500">tickets</p>
+                            <p className="text-white">tickets</p>
                           </div>
                           <div className="text-center">
                             <p className="font-semibold text-white">{event.capacity}</p>
-                            <p className="text-zinc-500">capacity</p>
+                            <p className="text-white">capacity</p>
                           </div>
                         </div>
 
                         <button
                           type="button"
                           onClick={() => navigate(`/org/events/${event.id}`)}
-                          className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-zinc-400 transition-all hover:border-[#6c47ff]/40 hover:bg-[#6c47ff]/20 hover:text-white sm:flex-none sm:py-2 sm:text-base"
+                          className="flex flex-1 items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-zinc-400 transition-all hover:border-[#6c47ff]/40 hover:bg-[#6c47ff]/20 hover:text-white sm:flex-none sm:py-2 sm:text-base"
                         >
                           Manage
                           <ArrowRight size={14} />

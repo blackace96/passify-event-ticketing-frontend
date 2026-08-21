@@ -111,7 +111,7 @@ export default function EventDetailPage() {
         {/* Back button */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-8 group"
+          className="flex items-center text-white bg-[#6c47ff] rounded-full px-4 py-2 hover:text-white transition-colors mb-8 group"
         >
           <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
           Back to events
@@ -166,15 +166,18 @@ export default function EventDetailPage() {
               </div>
 
               {/* Organiser */}
+              {/* Organiser */}
               <div className="bg-[#111122] border border-white/5 rounded-2xl p-6 mt-4">
                 <h2 className="text-white font-semibold mb-3">Organised by</h2>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-[#6c47ff] flex items-center justify-center text-white font-bold text-sm">
-                    {event.organiser?.name?.[0] || 'O'}
+                    {(event.organiser?.orgName || event.organiser?.name)?.[0] || 'O'}
                   </div>
                   <div>
-                    <p className="text-white text-sm font-medium">{event.organiser?.name || 'Event Organiser'}</p>
-                    <p className="text-zinc-500 text-xs">Event organiser</p>
+                    <p className="text-white text-sm font-medium">
+                      {event.organiser?.orgName || event.organiser?.name || 'Event Organiser'}
+                    </p>
+                    <p className="text-zinc-400 text-xs">Event organiser</p>
                   </div>
                 </div>
               </div>
@@ -194,29 +197,29 @@ export default function EventDetailPage() {
           <div className="lg:col-span-1">
             <div className="sticky top-24 bg-[#111122] border border-white/10 rounded-2xl p-6 space-y-5">
               <div>
-                <p className="text-zinc-500 text-sm mb-1">Ticket price</p>
+                <p className="text-white text-sm mb-1">Ticket price</p>
                 {event.price > 0 ? (
                   <p className="text-3xl font-bold text-white">
                     GHS <span>{event.price.toFixed(2)}</span>
                   </p>
                 ) : (
                   <p className="text-3xl font-bold text-white">
-                    Free <span className="text-zinc-500 text-base font-normal">entry</span>
+                    Free <span className="text-white text-base font-normal">entry</span>
                   </p>
                 )}
               </div>
 
               <div className="border-t border-white/5 pt-4 space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-zinc-500">Date</span>
+                  <span className="text-white">Date</span>
                   <span className="text-white">{date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-zinc-500">Venue</span>
+                  <span className="text-white">Venue</span>
                   <span className="text-white text-right max-w-[150px]">{event.venue}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-zinc-500">Capacity</span>
+                  <span className="text-white">Capacity</span>
                   <span className="text-white">{event.capacity}</span>
                 </div>
               </div>
@@ -230,14 +233,14 @@ export default function EventDetailPage() {
                     placeholder="Full name"
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-zinc-500 outline-none focus:border-[#6c47ff]/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-white text-sm placeholder-white outline-none focus:border-[#6c47ff]/50 transition-colors"
                   />
                   <input
                     type="email"
                     placeholder="Email address"
                     value={guestEmail}
                     onChange={(e) => setGuestEmail(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-sm placeholder-zinc-500 outline-none focus:border-[#6c47ff]/50 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-white text-sm placeholder-white outline-none focus:border-[#6c47ff]/50 transition-colors"
                   />
                 </div>
               )}
@@ -245,10 +248,10 @@ export default function EventDetailPage() {
               <button
                 onClick={handleBook}
                 disabled={booking || (showGuestForm && (!guestName || !guestEmail))}
-                className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3.5 rounded-xl transition-all duration-200"
+                className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3.5 rounded-full transition-all duration-200"
               >
                 {booking ? (
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent  animate-spin" />
                 ) : (
                   <>
                     <Ticket size={16} />

@@ -149,7 +149,7 @@ export default function ValidatePage() {
                 <span className="text-2xl">🔐</span>
               </div>
               <h1 className="text-white text-xl font-bold mb-2">Enter validator PIN</h1>
-              <p className="text-zinc-500 text-base">Enter the 6-digit PIN shared by the event organiser</p>
+              <p className="text-white text-base">Enter the 6-digit PIN shared by the event organiser</p>
             </div>
 
             <div className="flex items-center justify-center gap-3">
@@ -163,7 +163,7 @@ export default function ValidatePage() {
                   value={digit}
                   onChange={(e) => handlePinChange(i, e.target.value)}
                   onKeyDown={(e) => handlePinKeyDown(i, e)}
-                  className="w-12 h-14 bg-white/5 border border-white/10 focus:border-[#6c47ff] rounded-xl text-center text-white text-xl font-bold outline-none transition-colors"
+                  className="w-12 h-14 bg-white/5 border border-white/10 focus:border-[#6c47ff] rounded-full text-center text-white text-xl font-bold outline-none transition-colors"
                 />
               ))}
             </div>
@@ -171,7 +171,7 @@ export default function ValidatePage() {
             <button
               onClick={handleVerifyPin}
               disabled={verifying || pin.join('').length !== 6}
-              className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] disabled:opacity-40 text-white font-medium py-4 rounded-xl transition-all"
+              className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] disabled:opacity-40 text-white font-medium py-4 rounded-full transition-all"
             >
               {verifying ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -184,9 +184,9 @@ export default function ValidatePage() {
         {step === 'scan' && (
           <div className="space-y-4">
             <div className="bg-[#111122] border border-white/10 rounded-2xl p-5 text-center">
-              <p className="text-zinc-500 text-base mb-1">Scanning for</p>
+              <p className="text-white text-base mb-1">Scanning for</p>
               <p className="text-white font-semibold">{validatorData?.event?.title}</p>
-              <p className="text-zinc-500 text-base">{validatorData?.validator?.name}</p>
+              <p className="text-white text-base">{validatorData?.validator?.name}</p>
             </div>
 
             <div className="bg-[#111122] border border-white/10 rounded-2xl p-6 text-center space-y-5">
@@ -205,11 +205,11 @@ export default function ValidatePage() {
                 </div>
               </div>
 
-              <p className="text-zinc-500 text-base">Point camera at the QR code</p>
+              <p className="text-white text-base">Point camera at the QR code</p>
 
               <button
                 onClick={cameraActive ? stopCamera : startCamera}
-                className={`flex items-center justify-center gap-2 mx-auto px-6 py-3 rounded-xl text-base font-medium transition-all ${
+                className={`flex items-center justify-center gap-2 mx-auto px-6 py-3 rounded-full text-base font-medium transition-all ${
                   cameraActive
                     ? 'bg-red-500/20 border border-red-500/30 text-red-400 hover:bg-red-500/30'
                     : 'bg-[#6c47ff] hover:bg-[#7c57ff] text-white'
@@ -230,12 +230,12 @@ export default function ValidatePage() {
                   name="token"
                   type="text"
                   placeholder="Paste QR token here..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-base placeholder-zinc-500 outline-none focus:border-[#6c47ff]/50 transition-colors font-mono"
+                  className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-white text-base placeholder-white outline-none focus:border-[#6c47ff]/50 transition-colors font-mono"
                 />
                 <button
                   type="submit"
                   disabled={scanning}
-                  className="w-full flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:border-[#6c47ff]/40 text-white font-medium py-3 rounded-xl transition-all"
+                  className="w-full flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:border-[#6c47ff]/40 text-white font-medium py-3 rounded-full transition-all"
                 >
                   {scanning ? (
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -267,13 +267,13 @@ export default function ValidatePage() {
             </div>
 
             {result.valid && result.ticket && (
-              <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-left space-y-2">
+              <div className="bg-white/5 border border-white/10 rounded-full p-4 text-left space-y-2">
                 <div className="flex justify-between text-base">
-                  <span className="text-zinc-500">Name</span>
+                  <span className="text-white">Name</span>
                   <span className="text-white">{result.ticket.guestName || result.ticket.user?.name}</span>
                 </div>
                 <div className="flex justify-between text-base">
-                  <span className="text-zinc-500">Event</span>
+                  <span className="text-white">Event</span>
                   <span className="text-white">{result.ticket.event?.title}</span>
                 </div>
               </div>
@@ -281,7 +281,7 @@ export default function ValidatePage() {
 
             <button
               onClick={() => { setStep('scan'); setResult(null); }}
-              className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-4 rounded-xl transition-all"
+              className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-4 rounded-full transition-all"
             >
               <Camera size={16} /> Scan next ticket
             </button>

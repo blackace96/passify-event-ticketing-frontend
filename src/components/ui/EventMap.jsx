@@ -56,7 +56,7 @@ export default function EventMap({ latitude, longitude, venue, className = '' })
         href={`https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="absolute bottom-4 right-4 flex items-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-4 py-2 rounded-xl transition-all shadow-lg"
+        className="absolute bottom-4 right-4 flex items-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-4 py-2 rounded-full transition-all shadow-lg"
       >
         🗺️ Get directions
       </a>

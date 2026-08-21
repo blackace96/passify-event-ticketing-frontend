@@ -56,7 +56,7 @@ export default function DashboardPage() {
             return (
               <div key={stat.label} className="bg-[#111122] border border-white/5 rounded-2xl p-5">
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-zinc-500 text-base">{stat.label}</p>
+                  <p className="text-white text-base">{stat.label}</p>
                   <Icon size={14} className="text-[#6c47ff]" />
                 </div>
                 <p className="text-white text-3xl font-bold">{stat.value}</p>
@@ -71,7 +71,7 @@ export default function DashboardPage() {
             <h2 className="text-white font-semibold text-lg">Upcoming tickets</h2>
             <button
               onClick={() => navigate('/my-tickets')}
-              className="group inline-flex items-center justify-center gap-2 self-start rounded-xl bg-[#6c47ff] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#6c47ff]/20 transition-all hover:bg-[#7c57ff] hover:scale-[1.02] active:scale-[0.98] sm:self-auto"
+              className="group inline-flex items-center justify-center gap-2 self-start rounded-full bg-[#6c47ff] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#6c47ff]/20 transition-all hover:bg-[#7c57ff] hover:scale-[1.02] active:scale-[0.98] sm:self-auto"
             >
               View all <ArrowRight size={14} />
             </button>
@@ -86,10 +86,10 @@ export default function DashboardPage() {
           ) : upcoming.length === 0 ? (
             <div className="bg-[#111122] border border-white/5 rounded-2xl p-10 text-center">
               <Ticket size={40} className="text-zinc-700 mx-auto mb-3" />
-              <p className="text-zinc-500">No upcoming tickets</p>
+              <p className="text-white">No upcoming tickets</p>
               <button
                 onClick={() => navigate('/events')}
-                className="mt-4 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-6 py-2.5 rounded-xl transition-all"
+                className="mt-4 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium px-6 py-2.5 rounded-full transition-all"
               >
                 Browse events
               </button>
@@ -105,7 +105,7 @@ export default function DashboardPage() {
                     className="bg-[#111122] border border-white/5 hover:border-[#6c47ff]/40 rounded-2xl p-5 cursor-pointer transition-all duration-200 flex items-center gap-4"
                   >
                     {/* Date block */}
-                    <div className="bg-[#6c47ff]/20 border border-[#6c47ff]/30 rounded-xl p-3 text-center min-w-[52px]">
+                    <div className="bg-[#6c47ff]/20 border border-[#6c47ff]/30 rounded-full p-3 text-center min-w-[52px]">
                       <p className="text-[#a78bfa] text-base uppercase">
                         {date.toLocaleString('default', { month: 'short' })}
                       </p>
@@ -115,11 +115,11 @@ export default function DashboardPage() {
                     {/* Info */}
                     <div className="flex-1 min-w-0">
                       <p className="text-white font-medium truncate">{ticket.event.title}</p>
-                      <p className="text-zinc-500 text-base truncate">{ticket.event.venue}</p>
+                      <p className="text-white text-base truncate">{ticket.event.venue}</p>
                       <p className="text-zinc-600 text-sm mt-0.5">{formatEventTime(date)}</p>
                       <span className={`inline-block mt-1.5 text-base px-2 py-0.5 rounded-full ${
                         ticket.status === 'USED'
-                          ? 'bg-zinc-800 text-zinc-500'
+                          ? 'bg-zinc-800 text-white'
                           : 'bg-[#6c47ff]/20 text-[#a78bfa]'
                       }`}>
                         {ticket.status === 'USED' ? 'Used' : 'Valid'}
@@ -138,11 +138,11 @@ export default function DashboardPage() {
         <div className="bg-gradient-to-r from-[#6c47ff]/20 to-[#6c47ff]/5 border border-[#6c47ff]/20 rounded-2xl p-8 flex items-center justify-between">
           <div>
             <h3 className="text-white font-semibold text-lg mb-1">Discover more events</h3>
-            <p className="text-zinc-500 text-base">Find and book tickets for upcoming events near you</p>
+            <p className="text-white text-base">Find and book tickets for upcoming events near you</p>
           </div>
           <button
             onClick={() => navigate('/events')}
-            className="bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+            className="bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium px-6 py-3 rounded-full transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
           >
             Browse events <ArrowRight size={16} />
           </button>

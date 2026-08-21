@@ -202,7 +202,7 @@ export default function BecomeOrganizerPage() {
                 in one place.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-zinc-500">
+              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white">
                 <span className="flex items-center gap-2">
                   <CheckCircle2 size={15} className="text-[#a78bfa]" />
                   Easy event creation
@@ -234,7 +234,7 @@ export default function BecomeOrganizerPage() {
                     Set up your organizer profile
                   </h2>
 
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+                  <p className="mt-2 text-sm leading-relaxed text-white">
                     You're already a PASSIFY user. We only need your organizer
                     name to get you started.
                   </p>
@@ -262,7 +262,7 @@ export default function BecomeOrganizerPage() {
                       placeholder="e.g. Pulse Events"
                       maxLength={100}
                       disabled={loading}
-                      className="w-full rounded-xl border border-white/10 bg-[#090912] py-3.5 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#6c47ff]/60 focus:ring-2 focus:ring-[#6c47ff]/10 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="w-full rounded-full border border-white/10 bg-[#090912] py-3.5 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-[#6c47ff]/60 focus:ring-2 focus:ring-[#6c47ff]/10 disabled:cursor-not-allowed disabled:opacity-60"
                     />
                   </div>
 
@@ -274,7 +274,7 @@ export default function BecomeOrganizerPage() {
                   <button
                     type="submit"
                     disabled={loading || !orgName.trim()}
-                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#6c47ff] px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#6c47ff]/20 transition hover:bg-[#7c57ff] hover:shadow-[#6c47ff]/30 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#6c47ff] px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-[#6c47ff]/20 transition hover:bg-[#7c57ff] hover:shadow-[#6c47ff]/30 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {loading ? (
                       <>
@@ -313,7 +313,7 @@ export default function BecomeOrganizerPage() {
               More than just ticket sales.
             </h2>
 
-            <p className="mt-4 text-base leading-relaxed text-zinc-500">
+            <p className="mt-4 text-base leading-relaxed text-white">
               PASSIFY gives organizers the tools to manage the complete event
               journey.
             </p>
@@ -331,7 +331,7 @@ export default function BecomeOrganizerPage() {
 
                 <h3 className="text-lg font-bold">{title}</h3>
 
-                <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+                <p className="mt-3 text-sm leading-relaxed text-white">
                   {description}
                 </p>
               </div>
@@ -364,7 +364,7 @@ export default function BecomeOrganizerPage() {
                 </span>
 
                 <div className="relative">
-                  <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-xl bg-[#6c47ff]/15 text-[#a78bfa]">
+                  <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-full bg-[#6c47ff]/15 text-[#a78bfa]">
                     <Icon size={20} />
                   </div>
 
@@ -374,7 +374,7 @@ export default function BecomeOrganizerPage() {
 
                   <h3 className="mt-2 text-lg font-bold">{title}</h3>
 
-                  <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+                  <p className="mt-3 text-sm leading-relaxed text-white">
                     {description}
                   </p>
                 </div>
@@ -438,7 +438,7 @@ export default function BecomeOrganizerPage() {
                   .getElementById('orgName')
                   ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
               }
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-base font-bold text-[#171126] transition hover:-translate-y-0.5 hover:bg-zinc-100"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-base font-bold text-[#171126] transition hover:-translate-y-0.5 hover:bg-zinc-100"
             >
               Get started
               <ArrowRight size={17} />

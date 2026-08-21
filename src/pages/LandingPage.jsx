@@ -148,7 +148,7 @@ export default function LandingPage() {
 
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#6c47ff] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#7c57ff] hover:shadow-lg hover:shadow-[#6c47ff]/30"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#6c47ff] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#7c57ff] hover:shadow-lg hover:shadow-[#6c47ff]/30"
               >
                 Explore events
                 <ArrowRight size={16} />
@@ -189,7 +189,7 @@ export default function LandingPage() {
           <button
   type="button"
   onClick={() => navigate('/events')}
-  className="group inline-flex items-center justify-center gap-2 self-start rounded-xl bg-[#6c47ff] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#6c47ff]/20 transition-all hover:bg-[#7c57ff] hover:scale-[1.02] active:scale-[0.98] sm:self-auto"
+  className="group inline-flex items-center justify-center gap-2 self-start rounded-full bg-[#6c47ff] px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#6c47ff]/20 transition-all hover:bg-[#7c57ff] hover:scale-[1.02] active:scale-[0.98] sm:self-auto"
 >
   View all events
   <ArrowRight
@@ -240,13 +240,13 @@ export default function LandingPage() {
             <h3 className="text-lg font-semibold text-white">
               No {activeCategory === 'All' ? '' : activeCategory.toLowerCase()} events yet
             </h3>
-            <p className="mx-auto mt-2 max-w-sm text-base leading-relaxed text-zinc-500">
+            <p className="mx-auto mt-2 max-w-sm text-base leading-relaxed text-white">
               Try another category, or browse all upcoming events.
             </p>
             <button
               type="button"
               onClick={() => setActiveCategory('All')}
-              className="mt-6 rounded-xl bg-[#6c47ff] px-5 py-3 text-base font-semibold transition hover:bg-[#7c57ff]"
+              className="mt-6 rounded-full bg-[#6c47ff] px-5 py-3 text-base font-semibold transition hover:bg-[#7c57ff]"
             >
               Browse all events
             </button>
@@ -297,7 +297,7 @@ export default function LandingPage() {
                     </div>
 
                     <div className="flex gap-4 px-5 pt-5">
-                      <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl border border-[#6c47ff]/25 bg-[#6c47ff]/10">
+                      <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-full border border-[#6c47ff]/25 bg-[#6c47ff]/10">
                         <span className="text-[10px] font-bold uppercase tracking-wide text-[#a78bfa]">
                           {eventDate.month}
                         </span>
@@ -310,7 +310,7 @@ export default function LandingPage() {
                         <h3 className="truncate text-base font-bold text-white">
                           {event.title}
                         </h3>
-                        <p className="mt-1 flex items-center gap-1.5 truncate text-base text-zinc-500">
+                        <p className="mt-1 flex items-center gap-1.5 truncate text-base text-white">
                           <MapPin size={13} className="shrink-0 text-[#a78bfa]" />
                           {event.venue || 'Venue to be announced'}
                         </p>
@@ -320,7 +320,7 @@ export default function LandingPage() {
 
                   <div className="flex items-center justify-between px-5 pb-5 pt-4">
                     <div className="min-w-0">
-                      <p className="flex items-center gap-1.5 text-base text-zinc-500">
+                      <p className="flex items-center gap-1.5 text-base text-white">
                         <Calendar size={12} />
                         {eventDate.full}
                       </p>
@@ -395,7 +395,7 @@ export default function LandingPage() {
                   <Icon size={22} />
                 </div>
                 <h3 className="text-lg font-bold text-white">{title}</h3>
-                <p className="mt-3 text-base leading-relaxed text-zinc-500">
+                <p className="mt-3 text-base leading-relaxed text-white">
                   {description}
                 </p>
               </div>
@@ -424,14 +424,14 @@ export default function LandingPage() {
               <button
                 type="button"
                 onClick={() => navigate('/login')}
-                className="rounded-xl bg-[#6c47ff] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[#7c57ff] hover:shadow-lg hover:shadow-[#6c47ff]/30"
+                className="rounded-full bg-[#6c47ff] px-7 py-3.5 text-base font-semibold text-white transition hover:bg-[#7c57ff] hover:shadow-lg hover:shadow-[#6c47ff]/30"
               >
                 Create an event
               </button>
               <button
                 type="button"
                 onClick={() => navigate('/events')}
-                className="rounded-xl border border-white/15 bg-white/10 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
+                className="rounded-full border border-white/15 bg-white/10 px-7 py-3.5 text-base font-semibold text-white transition hover:bg-white/15"
               >
                 Browse events
               </button>

@@ -96,7 +96,7 @@ export default function AboutPage() {
               <button
                 type="button"
                 onClick={() => navigate('/events')}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-violet-500 px-5 py-3.5 font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090912]"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-violet-500 px-5 py-3.5 font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090912]"
               >
                 Explore events <ArrowRight size={17} />
               </button>
@@ -105,7 +105,7 @@ export default function AboutPage() {
                 onClick={() =>
                   navigate(user?.role === 'organizer' ? '/create-event' : '/become-organizer')
                 }
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.045] px-5 py-3.5 font-semibold text-zinc-100 transition hover:border-violet-300/30 hover:bg-violet-400/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300"
+                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.045] px-5 py-3.5 font-semibold text-zinc-100 transition hover:border-violet-300/30 hover:bg-violet-400/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300"
               >
                 Host an event
               </button>
@@ -133,7 +133,7 @@ export default function AboutPage() {
             <div className="mt-10 grid gap-5 md:grid-cols-3">
               {capabilities.map(({ icon: Icon, title, text }) => (
                 <article key={title} className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5">
-                  <div className="grid h-11 w-11 place-items-center rounded-xl bg-violet-400/10 text-violet-200 ring-1 ring-inset ring-violet-300/15">
+                  <div className="grid h-11 w-11 place-items-center rounded-full bg-violet-400/10 text-violet-200 ring-1 ring-inset ring-violet-300/15">
                     <Icon size={20} />
                   </div>
                   <h3 className="mt-5 text-lg font-semibold text-white">{title}</h3>
@@ -201,7 +201,7 @@ export default function AboutPage() {
               <button
                 type="button"
                 onClick={() => navigate('/events')}
-                className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-3.5 font-semibold text-violet-800 transition hover:bg-violet-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-violet-700"
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3.5 font-semibold text-violet-800 transition hover:bg-violet-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-violet-700"
               >
                 Discover events <ArrowRight size={17} />
               </button>
@@ -225,7 +225,7 @@ export default function AboutPage() {
             <button
               type="button"
               onClick={() => setSelectedMember(null)}
-              className="absolute right-4 top-4 rounded-xl p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300"
+              className="absolute right-4 top-4 rounded-full p-2 text-zinc-400 transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-300"
               aria-label="Close profile"
             >
               <X size={19} />

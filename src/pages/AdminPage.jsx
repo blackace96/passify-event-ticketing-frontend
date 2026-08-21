@@ -114,7 +114,7 @@ export default function AdminPage() {
               )}
             </div>
           </div>
-          <p className="text-sm sm:text-base text-zinc-500">Review and manage events and users</p>
+          <p className="text-sm sm:text-base text-white">Review and manage events and users</p>
         </section>
 
         {/* Stats Grid */}
@@ -122,7 +122,7 @@ export default function AdminPage() {
           {stats.map(({ label, value, icon: Icon }) => (
             <div key={label} className="bg-[#111122] border border-white/5 rounded-2xl p-4 sm:p-5 min-w-0 hover:border-white/10 transition-colors">
               <div className="flex items-center justify-between gap-2 mb-3">
-                <p className="text-xs sm:text-sm text-zinc-500 truncate">{label}</p>
+                <p className="text-xs sm:text-sm text-white truncate">{label}</p>
                 <Icon size={15} className="flex-shrink-0 text-[#6c47ff]" />
               </div>
               <p className="text-2xl sm:text-3xl font-bold text-white">{value}</p>
@@ -139,7 +139,7 @@ export default function AdminPage() {
                 type="button"
                 onClick={() => setTab(item.id)}
                 className={`flex-shrink-0 whitespace-nowrap flex items-center gap-2 px-3 sm:px-4 py-3 text-sm sm:text-base font-medium border-b-2 -mb-px transition-colors ${
-                  tab === item.id ? 'border-[#6c47ff] text-white' : 'border-transparent text-zinc-500 hover:text-zinc-300'
+                  tab === item.id ? 'border-[#6c47ff] text-white' : 'border-transparent text-white hover:text-zinc-300'
                 }`}
               >
                 {item.label}
@@ -163,7 +163,7 @@ export default function AdminPage() {
                 <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
                   <Calendar size={22} className="text-zinc-600" />
                 </div>
-                <p className="text-sm sm:text-base text-zinc-500">No {tab} events</p>
+                <p className="text-sm sm:text-base text-white">No {tab} events</p>
               </div>
             ) : (
               filteredEvents.map((event) => {
@@ -171,7 +171,7 @@ export default function AdminPage() {
                 return (
                   <article key={event.id} className="bg-[#111122] border border-white/5 rounded-2xl p-4 sm:p-5 hover:border-white/10 transition-colors">
                     <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                      <div className="w-full h-40 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-white/5 flex-shrink-0">
+                      <div className="w-full h-40 sm:w-16 sm:h-16 rounded-full overflow-hidden bg-white/5 flex-shrink-0">
                         <img
                           src={event.image || 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80'}
                           alt={event.title || 'Event'}
@@ -186,7 +186,7 @@ export default function AdminPage() {
                             {event.status}
                           </span>
                         </div>
-                        <p className="text-xs sm:text-sm text-zinc-500 break-words">
+                        <p className="text-xs sm:text-sm text-white break-words">
                           {event.venue || 'Venue not specified'} · {new Date(event.date).toLocaleDateString()}
                         </p>
                         <p className="text-xs sm:text-sm text-zinc-600 mt-1.5 break-words">
@@ -230,7 +230,7 @@ export default function AdminPage() {
                           <AlertCircle size={16} className="flex-shrink-0 mt-0.5 text-red-400" />
                           <div>
                             <p className="text-sm font-medium text-white">Reject this event</p>
-                            <p className="text-xs text-zinc-500 mt-0.5">You can optionally provide a reason for the organiser.</p>
+                            <p className="text-xs text-white mt-0.5">You can optionally provide a reason for the organiser.</p>
                           </div>
                         </div>
                         <input
@@ -239,14 +239,14 @@ export default function AdminPage() {
                           value={rejectReason}
                           onChange={(e) => setRejectReason(e.target.value)}
                           disabled={isProcessing}
-                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none focus:border-red-500/50 transition-colors disabled:opacity-50"
+                          className="w-full bg-white/5 border border-white/10 rounded-full px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none focus:border-red-500/50 transition-colors disabled:opacity-50"
                         />
                         <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-3">
                           <button
                             type="button"
                             onClick={() => handleReject(event.id)}
                             disabled={isProcessing}
-                            className="inline-flex items-center justify-center gap-2 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-400 text-sm px-4 py-2.5 rounded-xl transition-all disabled:opacity-50"
+                            className="inline-flex items-center justify-center gap-2 bg-red-500/10 border border-red-500/20 hover:bg-red-500/20 text-red-400 text-sm px-4 py-2.5 rounded-full transition-all disabled:opacity-50"
                           >
                             <XCircle size={14} /> {isProcessing ? 'Rejecting...' : 'Confirm rejection'}
                           </button>
@@ -254,7 +254,7 @@ export default function AdminPage() {
                             type="button"
                             onClick={() => { setRejectingId(null); setRejectReason(''); }}
                             disabled={isProcessing}
-                            className="text-zinc-500 hover:text-white text-sm px-4 py-2.5 rounded-xl transition-colors disabled:opacity-50"
+                            className="text-white hover:text-white text-sm px-4 py-2.5 rounded-full transition-colors disabled:opacity-50"
                           >
                             Cancel
                           </button>
@@ -271,7 +271,7 @@ export default function AdminPage() {
         {/* Users View */}
         {tab === 'users' && (
           <section className="bg-[#111122] border border-white/5 rounded-2xl overflow-hidden">
-            <div className="hidden sm:grid grid-cols-12 gap-4 px-5 py-3 border-b border-white/5 text-xs sm:text-sm text-zinc-500">
+            <div className="hidden sm:grid grid-cols-12 gap-4 px-5 py-3 border-b border-white/5 text-xs sm:text-sm text-white">
               <p className="col-span-4">Name</p>
               <p className="col-span-4">Email</p>
               <p className="col-span-2">Role</p>
@@ -280,12 +280,12 @@ export default function AdminPage() {
 
             {loading ? (
               <div className="p-5 space-y-3">
-                {[1, 2, 3, 4].map((i) => <div key={i} className="h-16 bg-white/5 rounded-xl animate-pulse" />)}
+                {[1, 2, 3, 4].map((i) => <div key={i} className="h-16 bg-white/5 rounded-full animate-pulse" />)}
               </div>
             ) : users.length === 0 ? (
               <div className="p-10 text-center">
                 <Users size={32} className="mx-auto mb-3 text-zinc-700" />
-                <p className="text-sm text-zinc-500">No users found</p>
+                <p className="text-sm text-white">No users found</p>
               </div>
             ) : (
               users.map((user) => (
@@ -306,7 +306,7 @@ export default function AdminPage() {
                   </div>
                   <div className="sm:col-span-2">
                     <p className="text-[11px] text-zinc-600 mb-1 sm:hidden uppercase tracking-wide">Activity</p>
-                    <p className="text-sm text-zinc-500">
+                    <p className="text-sm text-white">
                       {user._count?.tickets || 0} tickets · {user._count?.events || 0} events
                     </p>
                   </div>

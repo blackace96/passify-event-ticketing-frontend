@@ -63,10 +63,10 @@ export default function GuestTicketPage() {
         <FloatingTickets />
         <Ticket size={48} className="text-zinc-700 mb-4" />
         <h1 className="text-xl font-bold mb-2">Ticket not found</h1>
-        <p className="text-zinc-500 text-base mb-6">This ticket may be invalid or expired</p>
+        <p className="text-white text-base mb-6">This ticket may be invalid or expired</p>
         <button
           onClick={() => navigate('/')}
-          className="bg-[#6c47ff] hover:bg-[#7c57ff] text-white px-6 py-3 rounded-xl text-base font-medium transition-all"
+          className="bg-[#6c47ff] hover:bg-[#7c57ff] text-white px-6 py-3 rounded-full text-base font-medium transition-all"
         >
           Go to PASSIFY
         </button>
@@ -155,14 +155,14 @@ export default function GuestTicketPage() {
                 <div className="w-6 h-6 border-2 border-[#6c47ff] border-t-transparent rounded-full animate-spin" />
               </div>
             )}
-            <p className="text-zinc-500 text-base text-center">Show this QR code at the entrance</p>
+            <p className="text-white text-base text-center">Show this QR code at the entrance</p>
           </div>
 
           {/* Attendee */}
-          <div className="mt-6 bg-white/5 border border-white/10 rounded-xl p-4">
-            <p className="text-zinc-500 text-base mb-1">Ticket holder</p>
+          <div className="mt-6 bg-white/5 border border-white/10 rounded-full p-4">
+            <p className="text-white text-base mb-1">Ticket holder</p>
             <p className="text-white text-base font-medium">{ticket.guestName || ticket.user?.name}</p>
-            <p className="text-zinc-500 text-base">{ticket.guestEmail || ticket.user?.email}</p>
+            <p className="text-white text-base">{ticket.guestEmail || ticket.user?.email}</p>
           </div>
         </div>
       </div>
@@ -171,20 +171,20 @@ export default function GuestTicketPage() {
       <div className="flex gap-3 mt-5 w-full max-w-sm">
         <button
           onClick={handleDownload}
-          className="flex-1 flex items-center justify-center gap-2 bg-[#111122] border border-white/10 hover:border-[#6c47ff]/40 text-white text-base font-medium py-3.5 rounded-xl transition-all"
+          className="flex-1 flex items-center justify-center gap-2 bg-[#111122] border border-white/10 hover:border-[#6c47ff]/40 text-white text-base font-medium py-3.5 rounded-full transition-all"
         >
           <Download size={16} /> Download
         </button>
         <button
           onClick={handleShare}
-          className="flex-1 flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium py-3.5 rounded-xl transition-all"
+          className="flex-1 flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white text-base font-medium py-3.5 rounded-full transition-all"
         >
           <Share2 size={16} /> Share
         </button>
       </div>
 
       <p className="text-zinc-700 text-base mt-6 text-center">
-        Powered by PASSIFY · <button onClick={() => navigate('/')} className="hover:text-zinc-500 transition-colors">Visit site</button>
+        Powered by PASSIFY · <button onClick={() => navigate('/')} className="hover:text-white transition-colors">Visit site</button>
       </p>
     </div>
   );

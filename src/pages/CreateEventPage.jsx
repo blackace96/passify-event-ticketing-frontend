@@ -94,19 +94,10 @@ export default function CreateEventPage() {
 
       <div className="relative max-w-3xl mx-auto px-6 pt-28 pb-20">
 
-        {/* Back */}
-        <button
-          onClick={() => navigate('/org/dashboard')}
-          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-8 group"
-        >
-          <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-          Back to dashboard
-        </button>
-
         {/* Header */}
         <div className="mb-10">
           <h1 className="text-3xl font-bold text-white mb-2">Create Event</h1>
-          <p className="text-zinc-200">Fill in the details below to create your event</p>
+          <h2 className="text-zinc-200 font-semibold text-2xl">Fill in the details below to create your event</h2>
         </div>
 
         <div className="space-y-5">
@@ -139,10 +130,10 @@ export default function CreateEventPage() {
                     <ImagePlus size={24} className="text-[#a78bfa]" />
                   </div>
                   <div>
-                    <p className="text-white text-base font-medium">Upload event cover photo</p>
-                    <p className="text-zinc-500 text-base mt-1">JPG, PNG or WebP · Max 5MB · 1200×630 recommended</p>
+                    <p className="text-zinc-200 text-base font-medium">Upload event cover photo</p>
+                    <p className="text-zinc200 text-base mt-1">JPG, PNG or WebP · Max 5MB · 1200×630 recommended</p>
                   </div>
-                  <span className="bg-[#6c47ff]/20 border border-[#6c47ff]/30 text-[#a78bfa] text-base px-4 py-2 rounded-xl">
+                  <span className="bg-[#6c47ff]/20 border border-[#6c47ff]/30 text-[#a78bfa] text-base px-4 py-2 rounded-full">
                     Choose photo
                   </span>
                 </div>
@@ -158,8 +149,8 @@ export default function CreateEventPage() {
 
           {/* Title */}
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-6">
-            <label className="block text-zinc-400 text-base font-medium uppercase tracking-wider mb-3">
-              Event title *
+            <label className="block text-zinc-200 text-base font-medium uppercase tracking-wider mb-3">
+              Event title
             </label>
             <input
               type="text"
@@ -173,8 +164,8 @@ export default function CreateEventPage() {
 
           {/* Description */}
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-6">
-            <label className="block text-zinc-400 text-base font-medium uppercase tracking-wider mb-3">
-              <FileText size={12} className="inline mr-1" /> Description
+            <label className="block text-zinc-200 text-base font-medium uppercase tracking-wider mb-3">
+              <FileText size={12} className="inline text-zinc-200 mr-1" /> Description
             </label>
             <textarea
               name="description"
@@ -190,7 +181,7 @@ export default function CreateEventPage() {
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-6">
             <label
               htmlFor="event-category"
-              className="block text-zinc-400 text-base font-medium uppercase tracking-wider mb-3"
+              className="block text-zinc-200 text-base font-medium uppercase tracking-wider mb-3"
             >
               Category *
             </label>
@@ -200,9 +191,9 @@ export default function CreateEventPage() {
                 name="category"
                 value={form.category}
                 onChange={handleChange}
-                className="w-full appearance-none rounded-xl border border-white/10 bg-[#0c0c18] px-4 py-3 pr-10 text-base text-white outline-none transition-colors focus:border-[#6c47ff]/50 focus:ring-2 focus:ring-[#6c47ff]/20"
+                className="w-full appearance-none rounded-full border border-white/10 bg-[#0c0c18] px-4 py-3 pr-10 text-base text-white outline-none transition-colors focus:border-[#6c47ff]/50 focus:ring-2 focus:ring-[#6c47ff]/20"
               >
-                <option value="" disabled className="text-zinc-500">
+                <option value="" disabled className="text-white">
                   Select a category
                 </option>
                 {EVENT_CATEGORIES.map((cat) => (
@@ -213,16 +204,16 @@ export default function CreateEventPage() {
               </select>
               <ChevronDown
                 size={18}
-                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500"
+                className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-white"
                 aria-hidden="true"
               />
             </div>
-            <p className="mt-2 text-sm text-zinc-600">Choose the category that best describes your event.</p>
+            <p className="mt-2 text-base text-zinc-600">Choose the category that best describes your event.</p>
           </div>
 
           {/* Date */}
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-6">
-            <label className="block text-zinc-400 text-base font-medium uppercase tracking-wider mb-3">
+            <label className="block text-zinc-200 text-base font-medium uppercase tracking-wider mb-3">
               <Calendar size={12} className="inline mr-1" /> Date & time *
             </label>
             <input
@@ -236,8 +227,8 @@ export default function CreateEventPage() {
 
           {/* Venue & Location — full width */}
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-6">
-            <label className="block text-zinc-400 text-base font-medium uppercase tracking-wider mb-4">
-              <MapPin size={12} className="inline mr-1" /> Venue & location *
+            <label className="block text-zinc-200 text-base font-medium uppercase tracking-wider mb-4">
+              <MapPin size={12} className="inline mr-1" /> Venue & location 
             </label>
             <LocationPicker
               initialVenue={form.venue}
@@ -249,8 +240,8 @@ export default function CreateEventPage() {
 
           {/* Capacity */}
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-6">
-            <label className="block text-zinc-400 text-base font-medium uppercase tracking-wider mb-3">
-              <Users size={12} className="inline mr-1" /> Capacity *
+            <label className="block text-zinc-200 text-base font-medium uppercase tracking-wider mb-3">
+              <Users size={12} className="inline mr-1" /> Capacity 
             </label>
             <input
               type="number"
@@ -267,11 +258,11 @@ export default function CreateEventPage() {
 
           {/* Price */}
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-6">
-            <label className="block text-zinc-400 text-xs font-medium uppercase tracking-wider mb-3">
+            <label className="block text-zinc-200 text-base font-medium uppercase tracking-wider mb-3">
               Ticket price (GHS)
             </label>
             <div className="flex items-center gap-3">
-              <span className="text-zinc-500 text-sm font-medium">GHS</span>
+              <span className="text-white text-base font-medium">GHS</span>
               <input
                 type="number"
                 name="price"
@@ -283,7 +274,7 @@ export default function CreateEventPage() {
                 className="flex-1 bg-transparent text-white placeholder-zinc-600 outline-none text-base"
               />
             </div>
-            <p className="text-zinc-600 text-xs mt-2">Set to 0 for a free event</p>
+            <p className="text-zinc-600 text-base mt-2">Set to 0 for a free event</p>
           </div>
 
           {/* Review info */}
@@ -293,7 +284,7 @@ export default function CreateEventPage() {
             </div>
             <div>
               <p className="text-white text-base font-medium mb-1">Review process</p>
-              <p className="text-zinc-500 text-base leading-relaxed">
+              <p className="text-white text-base leading-relaxed">
                 Events are reviewed before going live to ensure quality and prevent fraud. You'll be notified once your event is approved. A 6-digit validator PIN is auto-generated on approval.
               </p>
             </div>
@@ -304,14 +295,14 @@ export default function CreateEventPage() {
             <button
               onClick={() => handleSubmit('DRAFT')}
               disabled={loading || uploadingImage}
-              className="flex-1 flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:border-white/20 text-white font-medium py-4 rounded-xl transition-all duration-200 disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-2 bg-white/5 border border-white/10 hover:border-white/20 text-white font-medium py-4 rounded-full transition-all duration-200 disabled:opacity-50"
             >
               <Save size={16} /> Save as draft
             </button>
             <button
               onClick={() => handleSubmit('PENDING')}
               disabled={loading || uploadingImage}
-              className="flex-1 flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-4 rounded-xl transition-all duration-200 disabled:opacity-50"
+              className="flex-1 flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-4 rounded-full transition-all duration-200 disabled:opacity-50"
             >
               {loading || uploadingImage ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
