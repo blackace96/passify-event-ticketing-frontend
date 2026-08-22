@@ -56,7 +56,7 @@ export default function ValidatePage() {
           if (result) {
             const qrToken = result.getText();
 
-            console.log('🔥 QR CODE DETECTED:', qrToken);
+            console.log(' QR CODE DETECTED:', qrToken);
 
             stopCamera();
 
@@ -64,13 +64,7 @@ export default function ValidatePage() {
           }
         }
       );
-
-      // ZXing continuously calls this while it is looking.
-      // Do NOT display an error here because "NotFoundException"
-      // is normal when there is no QR in the current frame.
-    }
-    );
-
+  
 } catch (err) {
   console.error('QR scanner error:', err);
 
