@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { CheckCircle, XCircle, Camera, Ticket } from 'lucide-react';
-import { BrowserQRCodeReader } from '@zxing/library';
+import { BrowserQRCodeReader } from '@zxing/browser';
 import api from '../services/api';
 import toast from 'react-hot-toast';
- 
+
 export default function ValidatePage() {
   const { eventId } = useParams();
   const [searchParams] = useSearchParams();
   const magicToken = searchParams.get('token');
- 
+
   const [step, setStep] = useState('pin');
   const [pin, setPin] = useState(['', '', '', '', '', '']);
   const [validatorData, setValidatorData] = useState(null);
@@ -20,95 +20,87 @@ export default function ValidatePage() {
   const inputRefs = useRef([]);
   const videoRef = useRef(null);
   const codeReaderRef = useRef(null);
- 
+
   useEffect(() => {
     return () => stopCamera();
   }, []);
- 
+
+  // Extracts a bare token whether the QR encodes a raw token or a full URL
+  // like https://passify.app/tickets/abc123 or https://passify.app/validate?token=abc123
+  const extractToken = (scanned) => {
+    try {
+      const url = new URL(scanned);
+      return url.searchParams.get('token') || url.pathname.split('/').filter(Boolean).pop();
+    } catch {
+      return scanned; // not a URL, treat as already-raw token
+    }
+  };
+
   const startCamera = async () => {
-  try {
-    if (!navigator.mediaDevices?.getUserMedia) {
-      toast.error('Camera is not supported by this browser');
-      return;
-    }
+    try {
+      stopCamera();
 
-    // Request camera explicitly
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: { ideal: 'environment' },
-        width: { ideal: 1280 },
-        height: { ideal: 720 },
-      },
-      audio: false,
-    });
+      const reader = new BrowserQRCodeReader();
+      codeReaderRef.current = reader;
 
-    // Attach stream to video
-    if (videoRef.current) {
-      videoRef.current.srcObject = stream;
-      videoRef.current.setAttribute('playsinline', 'true');
-      videoRef.current.muted = true;
+      setCameraActive(true);
 
-      await videoRef.current.play();
-    }
+      // Ask for camera permission first so device labels are populated
+      // (iOS Safari hides labels until permission is granted)
+      let backCam;
+      try {
+        const tempStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        tempStream.getTracks().forEach((t) => t.stop());
 
-    setCameraActive(true);
-
-    // Start ZXing
-    codeReaderRef.current = new BrowserQRCodeReader();
-
-    codeReaderRef.current.decodeFromVideoElement(
-      videoRef.current,
-      async (result, err) => {
-        if (result) {
-          const token = result.getText();
-
-          stopCamera();
-
-          await handleScan(token);
-        }
+        const devices = await BrowserQRCodeReader.listVideoInputDevices();
+        backCam =
+          devices.find((d) => /back|environment|rear/i.test(d.label)) ||
+          devices[devices.length - 1];
+      } catch (permErr) {
+        console.warn('Could not enumerate devices, falling back to default camera', permErr);
       }
-    );
 
-  } catch (err) {
-    console.error('Camera error:', err);
+      await reader.decodeFromVideoDevice(
+        backCam?.deviceId ?? undefined,
+        videoRef.current,
+        async (result, error) => {
+          if (result) {
+            const rawText = result.getText();
+            const qrToken = extractToken(rawText);
 
-    if (err.name === 'NotAllowedError') {
-      toast.error(
-        'Camera permission was denied. Please allow camera access in your browser settings.'
+            stopCamera();
+
+            await handleScan(qrToken);
+          }
+          // NotFoundException fires continuously while no QR is in frame — expected, ignore it
+        }
       );
-    } else if (err.name === 'NotFoundError') {
-      toast.error('No camera was found on this device.');
-    } else if (err.name === 'NotReadableError') {
-      toast.error('Camera is being used by another application.');
-    } else if (err.name === 'SecurityError') {
-      toast.error('Camera requires a secure HTTPS connection.');
-    } else {
-      toast.error(`Could not access camera: ${err.message}`);
+    } catch (err) {
+      console.error('QR scanner error:', err);
+      setCameraActive(false);
+      toast.error(err?.message || 'Unable to start QR scanner');
+    }
+  };
+
+  const stopCamera = () => {
+    if (codeReaderRef.current) {
+      try {
+        codeReaderRef.current.reset();
+      } catch (err) {
+        console.warn('ZXing reset error:', err);
+      }
+      codeReaderRef.current = null;
+    }
+
+    if (videoRef.current?.srcObject) {
+      const tracks = videoRef.current.srcObject.getTracks();
+      tracks.forEach((track) => track.stop());
+      videoRef.current.srcObject = null;
     }
 
     setCameraActive(false);
-  }
-};
+  };
 
-const stopCamera = () => {
-  // Stop ZXing
-  if (codeReaderRef.current) {
-    codeReaderRef.current.reset();
-    codeReaderRef.current = null;
-  }
-
-  // IMPORTANT: stop the actual camera tracks
-  if (videoRef.current?.srcObject) {
-    const tracks = videoRef.current.srcObject.getTracks();
-
-    tracks.forEach((track) => track.stop());
-
-    videoRef.current.srcObject = null;
-  }
-
-  setCameraActive(false);
-};
- 
   const handlePinChange = (index, value) => {
     if (!/^\d*$/.test(value)) return;
     const newPin = [...pin];
@@ -118,13 +110,13 @@ const stopCamera = () => {
       inputRefs.current[index + 1]?.focus();
     }
   };
- 
+
   const handlePinKeyDown = (index, e) => {
     if (e.key === 'Backspace' && !pin[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
- 
+
   const handleVerifyPin = async () => {
     const pinString = pin.join('');
     if (pinString.length !== 6) {
@@ -148,7 +140,7 @@ const stopCamera = () => {
       setVerifying(false);
     }
   };
- 
+
   const handleScan = async (qrToken) => {
     try {
       setScanning(true);
@@ -165,31 +157,31 @@ const stopCamera = () => {
       setScanning(false);
     }
   };
- 
+
   const handleManualEntry = async (e) => {
     e.preventDefault();
     const token = e.target.token.value.trim();
     if (!token) return;
-    await handleScan(token);
+    await handleScan(extractToken(token));
   };
- 
+
   return (
     <div className="min-h-screen bg-[#090912] text-white flex flex-col items-center justify-center px-4 py-12">
- 
+
       {/* Logo */}
       <div className="flex items-center gap-3 mb-10">
         <svg width="52" height="26" viewBox="0 0 92 48" fill="none">
-          <rect x="0" y="2" width="92" height="44" rx="9" fill="#6c47ff"/>
-          <circle cx="0" cy="24" r="9" fill="#0d0d1a"/>
-          <circle cx="92" cy="24" r="9" fill="#0d0d1a"/>
-          <line x1="22" y1="4" x2="22" y2="44" stroke="#0d0d1a" strokeWidth="1.5" strokeDasharray="3 3"/>
+          <rect x="0" y="2" width="92" height="44" rx="9" fill="#6c47ff" />
+          <circle cx="0" cy="24" r="9" fill="#0d0d1a" />
+          <circle cx="92" cy="24" r="9" fill="#0d0d1a" />
+          <line x1="22" y1="4" x2="22" y2="44" stroke="#0d0d1a" strokeWidth="1.5" strokeDasharray="3 3" />
           <text x="38" y="32" textAnchor="middle" fontSize="22" fontWeight="900" fill="white" fontFamily="system-ui">P</text>
         </svg>
         <span className="text-white font-bold tracking-widest text-base">PASSIFY</span>
       </div>
- 
+
       <div className="w-full max-w-md">
- 
+
         {/* PIN step */}
         {step === 'pin' && (
           <div className="bg-[#111122] border border-white/10 rounded-2xl p-8 text-center space-y-6">
@@ -200,7 +192,7 @@ const stopCamera = () => {
               <h1 className="text-white text-xl font-bold mb-2">Enter validator PIN</h1>
               <p className="text-white text-base">Enter the 6-digit PIN shared by the event organiser</p>
             </div>
- 
+
             <div className="flex items-center justify-center gap-3">
               {pin.map((digit, i) => (
                 <input
@@ -216,7 +208,7 @@ const stopCamera = () => {
                 />
               ))}
             </div>
- 
+
             <button
               onClick={handleVerifyPin}
               disabled={verifying || pin.join('').length !== 6}
@@ -228,7 +220,7 @@ const stopCamera = () => {
             </button>
           </div>
         )}
- 
+
         {/* Scan step */}
         {step === 'scan' && (
           <div className="space-y-4">
@@ -237,9 +229,9 @@ const stopCamera = () => {
               <p className="text-white font-semibold">{validatorData?.event?.title}</p>
               <p className="text-white text-base">{validatorData?.validator?.name}</p>
             </div>
- 
+
             <div className="bg-[#111122] border border-white/10 rounded-2xl p-6 text-center space-y-5">
- 
+
               {/* Video feed */}
               <div className="relative w-full aspect-square max-w-xs mx-auto rounded-2xl overflow-hidden bg-black border border-white/10">
                 <video
@@ -259,27 +251,26 @@ const stopCamera = () => {
                   </div>
                 </div>
               </div>
- 
+
               <p className="text-white text-base">Point camera at the QR code</p>
- 
+
               <button
                 onClick={cameraActive ? stopCamera : startCamera}
-                className={`flex items-center justify-center gap-2 mx-auto px-6 py-3 rounded-full text-base font-medium transition-all ${
-                  cameraActive
+                className={`flex items-center justify-center gap-2 mx-auto px-6 py-3 rounded-full text-base font-medium transition-all ${cameraActive
                     ? 'bg-red-500/20 border border-red-500/30 text-red-400 hover:bg-red-500/30'
                     : 'bg-[#6c47ff] hover:bg-[#7c57ff] text-white'
-                }`}
+                  }`}
               >
                 <Camera size={16} />
                 {cameraActive ? 'Stop camera' : 'Start camera'}
               </button>
- 
+
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-px bg-white/10" />
                 <span className="text-zinc-600 text-base">or enter manually</span>
                 <div className="flex-1 h-px bg-white/10" />
               </div>
- 
+
               <form onSubmit={handleManualEntry} className="space-y-3">
                 <input
                   name="token"
@@ -302,25 +293,24 @@ const stopCamera = () => {
             </div>
           </div>
         )}
- 
+
         {/* Result step */}
         {step === 'result' && result && (
-          <div className={`bg-[#111122] border rounded-2xl p-8 text-center space-y-5 ${
-            result.valid ? 'border-green-500/30' : 'border-red-500/30'
-          }`}>
+          <div className={`bg-[#111122] border rounded-2xl p-8 text-center space-y-5 ${result.valid ? 'border-green-500/30' : 'border-red-500/30'
+            }`}>
             {result.valid ? (
               <CheckCircle size={64} className="text-green-400 mx-auto" />
             ) : (
               <XCircle size={64} className="text-red-400 mx-auto" />
             )}
- 
+
             <div>
               <h2 className={`text-2xl font-bold mb-2 ${result.valid ? 'text-green-400' : 'text-red-400'}`}>
                 {result.valid ? 'Valid Ticket ✓' : 'Invalid Ticket ✗'}
               </h2>
               <p className="text-zinc-400 text-base">{result.message}</p>
             </div>
- 
+
             {result.valid && result.ticket && (
               <div className="bg-white/5 border border-white/10 rounded-full p-4 text-left space-y-2">
                 <div className="flex justify-between text-base">
@@ -333,7 +323,7 @@ const stopCamera = () => {
                 </div>
               </div>
             )}
- 
+
             <button
               onClick={() => { setStep('scan'); setResult(null); }}
               className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-4 rounded-full transition-all"
@@ -346,4 +336,3 @@ const stopCamera = () => {
     </div>
   );
 }
- 
