@@ -20,7 +20,7 @@ export default function ValidatePage() {
   const inputRefs = useRef([]);
   const videoRef = useRef(null);
   const codeReaderRef = useRef(null);
-  const scanLockRef = useRef(false); // prevents duplicate fires from the same QR being processed twice
+  const sessionIdRef = useRef(0); // increments on every start/stop; decode callback ignores stale sessions
 
   useEffect(() => {
     return () => stopCamera();
@@ -38,7 +38,9 @@ export default function ValidatePage() {
   const startCamera = async () => {
     try {
       stopCamera();
-      scanLockRef.current = false;
+
+      sessionIdRef.current += 1;
+      const mySession = sessionIdRef.current;
 
       const reader = new BrowserQRCodeReader();
       codeReaderRef.current = reader;
@@ -62,9 +64,11 @@ export default function ValidatePage() {
         backCam?.deviceId ?? undefined,
         videoRef.current,
         async (result, error) => {
-          if (result && !scanLockRef.current) {
-            scanLockRef.current = true; // block any further fires until this scan resolves
+          // Ignore any callback firing after this session has been stopped/replaced —
+          // ZXing can deliver one more queued frame result even after reset().
+          if (mySession !== sessionIdRef.current) return;
 
+          if (result) {
             const rawText = result.getText();
             const qrToken = extractToken(rawText);
 
@@ -82,6 +86,8 @@ export default function ValidatePage() {
   };
 
   const stopCamera = () => {
+    sessionIdRef.current += 1; // invalidates any decode callback still in flight
+
     if (codeReaderRef.current) {
       try {
         codeReaderRef.current.reset();
@@ -163,7 +169,6 @@ export default function ValidatePage() {
       setStep('result');
     } finally {
       setScanning(false);
-      scanLockRef.current = false;
     }
   };
 
@@ -172,6 +177,12 @@ export default function ValidatePage() {
     const token = e.target.token.value.trim();
     if (!token) return;
     await handleScan(extractToken(token));
+  };
+
+  const handleScanNext = () => {
+    sessionIdRef.current += 1; // belt-and-suspenders: invalidate anything still pending
+    setStep('scan');
+    setResult(null);
   };
 
   const formatScanTime = (isoString) => {
@@ -348,7 +359,7 @@ export default function ValidatePage() {
             )}
 
             <button
-              onClick={() => { setStep('scan'); setResult(null); }}
+              onClick={handleScanNext}
               className="w-full flex items-center justify-center gap-2 bg-[#6c47ff] hover:bg-[#7c57ff] text-white font-medium py-4 rounded-full transition-all"
             >
               <Camera size={16} /> Scan next ticket
