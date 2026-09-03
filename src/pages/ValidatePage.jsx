@@ -20,33 +20,31 @@ export default function ValidatePage() {
   const inputRefs = useRef([]);
   const videoRef = useRef(null);
   const codeReaderRef = useRef(null);
+  const scanLockRef = useRef(false); // prevents duplicate fires from the same QR being processed twice
 
   useEffect(() => {
     return () => stopCamera();
   }, []);
 
-  // Extracts a bare token whether the QR encodes a raw token or a full URL
-  // like https://passify.app/tickets/abc123 or https://passify.app/validate?token=abc123
   const extractToken = (scanned) => {
     try {
       const url = new URL(scanned);
       return url.searchParams.get('token') || url.pathname.split('/').filter(Boolean).pop();
     } catch {
-      return scanned; // not a URL, treat as already-raw token
+      return scanned;
     }
   };
 
   const startCamera = async () => {
     try {
       stopCamera();
+      scanLockRef.current = false;
 
       const reader = new BrowserQRCodeReader();
       codeReaderRef.current = reader;
 
       setCameraActive(true);
 
-      // Ask for camera permission first so device labels are populated
-      // (iOS Safari hides labels until permission is granted)
       let backCam;
       try {
         const tempStream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -64,7 +62,9 @@ export default function ValidatePage() {
         backCam?.deviceId ?? undefined,
         videoRef.current,
         async (result, error) => {
-          if (result) {
+          if (result && !scanLockRef.current) {
+            scanLockRef.current = true; // block any further fires until this scan resolves
+
             const rawText = result.getText();
             const qrToken = extractToken(rawText);
 
@@ -72,7 +72,6 @@ export default function ValidatePage() {
 
             await handleScan(qrToken);
           }
-          // NotFoundException fires continuously while no QR is in frame — expected, ignore it
         }
       );
     } catch (err) {
@@ -148,13 +147,23 @@ export default function ValidatePage() {
         qrToken,
         validatorId: validatorData.validator.id,
       });
-      setResult({ valid: true, message: res.data.message, ticket: res.data.ticket });
+      setResult({
+        valid: true,
+        message: res.data.message,
+        ticket: res.data.ticket,
+        scannedAt: res.data.scannedAt,
+      });
       setStep('result');
     } catch (err) {
-      setResult({ valid: false, message: err.response?.data?.message || 'Invalid ticket' });
+      setResult({
+        valid: false,
+        message: err.response?.data?.message || 'Invalid ticket',
+        scannedAt: err.response?.data?.scannedAt || null,
+      });
       setStep('result');
     } finally {
       setScanning(false);
+      scanLockRef.current = false;
     }
   };
 
@@ -163,6 +172,15 @@ export default function ValidatePage() {
     const token = e.target.token.value.trim();
     if (!token) return;
     await handleScan(extractToken(token));
+  };
+
+  const formatScanTime = (isoString) => {
+    if (!isoString) return null;
+    return new Date(isoString).toLocaleString('en-GB', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+      timeZone: 'Africa/Accra',
+    });
   };
 
   return (
@@ -309,6 +327,11 @@ export default function ValidatePage() {
                 {result.valid ? 'Valid Ticket ✓' : 'Invalid Ticket ✗'}
               </h2>
               <p className="text-zinc-400 text-base">{result.message}</p>
+              {result.scannedAt && (
+                <p className="text-zinc-500 text-sm mt-1">
+                  {result.valid ? 'Scanned at' : 'Originally scanned at'}: {formatScanTime(result.scannedAt)}
+                </p>
+              )}
             </div>
 
             {result.valid && result.ticket && (
